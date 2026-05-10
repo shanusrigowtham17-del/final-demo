@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Sai Meghana Technical Consultants LLP</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET & ROOT (Strictly Preserved) ────────── */
+:root {
+  --bg-main: #ffffff;
+  --bg-alt: #f0f4f8; 
+  --bg-glass: rgba(255, 255, 255, 0.92);
+  
+  --text-main: #001229;
+  --text-muted: #4a5d73;
+  --text-light: #8b9eb3;
+  
+  --accent-cyan: #00adef;
+  --accent-navy: #002147;
+  --gradient-primary: linear-gradient(135deg, #00adef, #004d99);
+  
+  --border: rgba(0, 173, 239, 0.15);
+  --border-strong: rgba(0, 173, 239, 0.35);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg-main); color:var(--text-main);
+  overflow-x:hidden;
+}
+
+/* ── 3D CANVAS ───────────────────────────────── */
+#three-canvas {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  z-index:0; 
+  pointer-events:auto; 
+}
+
+/* ── NAV & LOGO (Strictly Preserved) ─────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  padding:1rem 4rem;
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--bg-glass);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  animation:slideDown .8s ease both;
+  pointer-events: auto;
+}
+@keyframes slideDown { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+
+.nav-brand {
+  display: flex; align-items: center; gap: 16px;
+  text-decoration: none; color: var(--text-main);
+  transition: opacity 0.3s ease;
+}
+.nav-brand:hover { opacity: 0.8; }
+.brand-icon { display: flex; align-items: center; justify-content: center; width: 68px; height: 68px; }
+.brand-icon svg { width: 100%; height: 100%; }
+.brand-text { font-family: 'DM Sans', sans-serif; font-size: 1.45rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1; text-transform: uppercase; }
+.brand-text span { display: block; font-size: 0.65rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.06em; margin-top: 6px; }
+
+.nav-links { display:flex; gap:2.5rem; }
+.nav-links a {
+  text-decoration:none; color:var(--text-muted);
+  font-size:.82rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase;
+  transition:color .3s; position:relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:2px; background:var(--accent-cyan);
+  transform:scaleX(0); transition:transform .35s;
+}
+.nav-links a:hover, .nav-links a.active { color:var(--accent-navy); }
+.nav-links a:hover::after, .nav-links a.active::after { transform:scaleX(1); }
+
+/* ── SCROLL CONTAINER & SECTIONS ─────────────── */
+#scroll-container { position:relative; z-index:10; pointer-events:none; }
+.page-section { pointer-events:none; min-height:100vh; display:flex; align-items:center; padding:9rem 4rem 5rem; position:relative; }
+.content-wrapper { pointer-events:auto; width: 100%; max-width: 1400px; margin: 0 auto; }
+
+.sec-bg-glass { background: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.95) 100%); }
+
+.sec-label { font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-cyan); font-weight:700; margin-bottom:.7rem; }
+.sec-title { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,4vw,4rem); font-weight:700; line-height:1.1; margin-bottom:1.2rem; color:var(--text-main); }
+.sec-title em { font-style:italic; color:var(--accent-cyan); }
+.sec-desc { color:var(--text-muted); font-size:1.05rem; line-height:1.8; max-width:580px; }
+
+/* ── PREMIUM INTERACTIVE SERVICES LIST ───────── */
+.services-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.svc-row {
+  display: grid;
+  grid-template-columns: 80px 1.5fr 2fr 40px;
+  align-items: center;
+  gap: 2rem;
+  padding: 3.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent;
+}
+
+.svc-row:first-child { border-top: 1px solid var(--border); }
+
+/* Glass Hover Backdrop */
+.svc-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: scaleY(0.8);
+  transform-origin: center;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+/* Blueprint Hover Accent Line */
+.svc-row::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent-cyan);
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
+}
+
+.svc-row:hover {
+  border-color: transparent;
+  transform: translateX(10px);
+  box-shadow: 0 20px 40px rgba(0, 173, 239, 0.05);
+}
+
+.svc-row:hover::before { opacity: 1; transform: scaleY(1); }
+.svc-row:hover::after { transform: scaleY(1); }
+
+.svc-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-light);
+  transition: color 0.4s ease;
+}
+
+.svc-row:hover .svc-num { color: var(--accent-cyan); }
+
+.svc-title-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+.svc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--accent-navy);
+  line-height: 1.2;
+}
+.svc-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.svc-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.svc-arrow {
+  color: var(--accent-cyan);
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: translateX(-15px);
+  transition: all 0.4s ease;
+}
+
+.svc-row:hover .svc-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── FOOTER (Strictly Preserved) ─────────────── */
+footer {
+  position:relative; z-index:50;
+  background:var(--accent-navy); border-top:1px solid var(--border);
+  padding:2.5rem 4rem; color:var(--bg-main);
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:1.5rem;
+  pointer-events: auto;
+}
+.ft-brand { font-family:'DM Sans',sans-serif; font-size:1.1rem; font-weight:600; color:var(--bg-main); letter-spacing:0.05em;}
+.ft-meta { font-size:.75rem; color:var(--text-light); margin-top:5px; }
+.ft-links { display:flex; gap:2rem; }
+.ft-links a { font-size:.75rem; color:var(--text-light); text-decoration:none; text-transform:uppercase; letter-spacing:.08em; transition:color .3s; font-weight:600;}
+.ft-links a:hover { color:var(--accent-cyan); }
+.ft-copy { font-size:.73rem; color:var(--text-light); }
+
+/* ── REVEAL ANIMATION ────────────────────────── */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity .75s ease,transform .75s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ── 3D STATE BADGE ───────────────────────────── */
+.state-badge {
+  position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
+  z-index:500; display:flex; align-items:center; gap:.8rem;
+  padding:.5rem 1.4rem; background:var(--bg-glass);
+  border:1px solid var(--border); border-radius:3px;
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent-navy); backdrop-filter:blur(10px);
+  transition:opacity .5s; box-shadow: 0 4px 20px rgba(0,173,239,0.08);
+}
+.state-badge::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--accent-cyan); animation:blink 2s infinite; }
+.state-badge-text { color:var(--accent-navy); font-weight:700; }
+
+@media(max-width:900px){
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  .page-section { padding:6rem 1.5rem 4rem; }
+  .svc-row { grid-template-columns: 1fr; gap: 1rem; padding: 2.5rem 1.5rem; }
+  .svc-num { display: none; }
+  .svc-arrow { display: none; }
+  footer { padding:2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- THREE.JS CANVAS -->
+<canvas id="three-canvas"></canvas>
+
+<!-- SCENE STATE BADGE -->
+<div class="state-badge"><span class="state-badge-text" id="stateLabel">Loading Engineering Data...</span></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(100, 5)">
+          <polygon points="0,0 22,25 0,16" fill="#001a4d" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,0 -22,25 0,16" fill="#00a8e8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,11 44,48 0,33" fill="#002b66" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,11 -44,48 0,33" fill="#00b4d8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,22 66,71 0,50" fill="#003c80" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,22 -66,71 0,50" fill="#00c0f0" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,33 88,94 0,67" fill="#004d99" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,33 -88,94 0,67" fill="#00ccff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,44 110,117 0,84" fill="#0066b3" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,44 -110,117 0,84" fill="#00d4ff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+    <div class="brand-text">
+      Sai Meghana
+      <span>Technical Consultants</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" data-nav>Home</a>
+    <a href="#" data-nav>About</a>
+    <a href="services.html" class="active" data-nav>Services</a>
+    <a href="#" data-nav>Contact</a>
+  </div>
+</nav>
+
+<!-- SCROLL CONTAINER -->
+<div id="scroll-container">
+
+  <!-- ── SERVICES HEADER & LIST ─────────────────── -->
+  <section id="sec-services-main" class="page-section sec-bg-glass" data-scene="services-intro">
+    <div class="content-wrapper">
+      <div class="reveal">
+        <div class="sec-label">Engineering Capabilities</div>
+        <h1 class="sec-title">Architectural <em>Disciplines.</em></h1>
+        <p class="sec-desc">Comprehensive structural, architectural, and civil consultancy modules engineered for industrial scale and absolute precision.</p>
+      </div>
+
+      <div class="services-list" data-scene="services-list">
+        
+        <a href="#" class="svc-row reveal">
+          <div class="svc-num">01</div>
+          <div class="svc-title-wrap">
+            <span class="svc-tag">Architecture</span>
+            <h3 class="svc-title">Architectural Layout Design</h3>
+          </div>
+          <p class="svc-desc">Master layout planning, precise CAD documentation, and regulatory compliance mapping designed explicitly for industrial scale facilities and admin complexes.</p>
+          <div class="svc-arrow">↗</div>
+        </a>
+
+        <a href="#" class="svc-row reveal">
+          <div class="svc-num">02</div>
+          <div class="svc-title-wrap">
+            <span class="svc-tag">Structural</span>
+            <h3 class="svc-title">Structural RCC Engineering</h3>
+          </div>
+          <p class="svc-desc">Engineered foundations, load-bearing frames, and heavy slabs designed for maximum dynamic durability and strict IS code adherence.</p>
+          <div class="svc-arrow">↗</div>
+        </a>
+
+        <a href="#" class="svc-row reveal">
+          <div class="svc-num">03</div>
+          <div class="svc-title-wrap">
+            <span class="svc-tag">Specialized</span>
+            <h3 class="svc-title">Heavy Machine Foundations</h3>
+          </div>
+          <p class="svc-desc">Advanced vibration isolation and dynamic load analysis engineered for turbines, compressors, and high-impact industrial presses.</p>
+          <div class="svc-arrow">↗</div>
+        </a>
+
+        <a href="#" class="svc-row reveal">
+          <div class="svc-num">04</div>
+          <div class="svc-title-wrap">
+            <span class="svc-tag">Infrastructure</span>
+            <h3 class="svc-title">Industrial Infrastructure</h3>
+          </div>
+          <p class="svc-desc">Comprehensive internal routing including heavy-duty transportation roads, storm drainage networks, and integrated utility corridors.</p>
+          <div class="svc-arrow">↗</div>
+        </a>
+
+        <a href="#" class="svc-row reveal">
+          <div class="svc-num">05</div>
+          <div class="svc-title-wrap">
+            <span class="svc-tag">Industrial</span>
+            <h3 class="svc-title">Storage & Process Structures</h3>
+          </div>
+          <p class="svc-desc">Large-span pre-engineered sheds, bulk storage silos, and emission management chimneys constructed for operational resilience.</p>
+          <div class="svc-arrow">↗</div>
+        </a>
+
+        <a href="#" class="svc-row reveal">
+          <div class="svc-num">06</div>
+          <div class="svc-title-wrap">
+            <span class="svc-tag">Consultancy</span>
+            <h3 class="svc-title">Project & Contract Management</h3>
+          </div>
+          <p class="svc-desc">Techno-commercial tendering, precision vendor selection, and end-to-end site supervision to ensure uncompromised execution.</p>
+          <div class="svc-arrow">↗</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+</div><!-- /scroll-container -->
+
+<footer>
+  <div>
+    <div class="ft-brand" style="display:flex;align-items:center;gap:12px;">
+      <div style="width: 32px; height: 32px;">
+        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(100, 5)">
+            <polygon points="0,0 22,25 0,16" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,0 -22,25 0,16" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 44,48 0,33" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 -44,48 0,33" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 66,71 0,50" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 -66,71 0,50" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </div>
+      SAI MEGHANA TECHNICAL CONSULTANTS
+    </div>
+    <div class="ft-meta">Hyderabad, Telangana · GST: 36**********1ZZ · Reg. Oct 2024</div>
+  </div>
+  <div class="ft-links">
+    <a href="index.html">Home</a>
+    <a href="#">About</a>
+    <a href="services.html">Services</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="ft-copy">© 2024 Sai Meghana Technical Consultants LLP. All rights reserved.</div>
+</footer>
+
+<!-- THREE.JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════
+   SAI MEGHANA — INTERACTIVE 3D BACKGROUND ENGINE
+   Architecture: Three.js r128
+   Theme: Deep Blue Blueprint Integration 
+   Services Page Sync: Assembly Phase & Slow Orbit
+═══════════════════════════════════════════════════════════ */
+
+const canvas = document.getElementById('three-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0xffffff, 0.012);
+
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 500);
+camera.position.set(0, 14, 52);
+camera.lookAt(0, 0, 0);
+
+const state = {
+  scroll: 0,
+  section: 'services-intro',
+  mouse: new THREE.Vector2(0, 0),
+  targetMouse: new THREE.Vector2(0, 0),
+  dragOffset: { x: 0, y: 0 },
+  isDragging: false,
+  time: 0,
+  visible: true,
+};
+
+const raycaster = new THREE.Raycaster();
+
+const C = {
+  ground: new THREE.Color(0xffffff),
+  cyan:   new THREE.Color(0x002244),
+  navy:   new THREE.Color(0x001f3f)
+};
+
+const MAT = {
+  blueprint: new THREE.MeshBasicMaterial({ color: C.cyan, wireframe: true, transparent: true, opacity: 0.15 }),
+  blueprintGlow: new THREE.LineBasicMaterial({ color: C.cyan, transparent: true, opacity: 0.35 }),
+  assembly: new THREE.MeshLambertMaterial({ color: 0x003366, transparent: true, opacity: 0.7, emissive: 0x001229, emissiveIntensity: 0.2 }),
+  solid: new THREE.MeshLambertMaterial({ color: 0xffffff, emissive: C.cyan, emissiveIntensity: 0.05 }),
+  ground: new THREE.MeshLambertMaterial({ color: C.ground }),
+  gridLine: new THREE.LineBasicMaterial({ color: C.cyan, transparent: true, opacity: 0.08 }),
+  pipe: new THREE.MeshLambertMaterial({ color: 0xe0f4fc, emissive: 0x002244, emissiveIntensity: 0.1 }),
+};
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.55); 
+scene.add(ambientLight);
+
+const sunLight = new THREE.DirectionalLight(0xffffff, 0.65);
+sunLight.position.set(30, 60, 20);
+sunLight.castShadow = true;
+sunLight.shadow.mapSize.set(1024, 1024);
+scene.add(sunLight);
+
+const cyanLight = new THREE.PointLight(0x002244, 1.0, 80);
+cyanLight.position.set(0, 20, 10);
+scene.add(cyanLight);
+
+const rimLight = new THREE.DirectionalLight(0x004d99, 0.5);
+rimLight.position.set(-30, 10, -20);
+scene.add(rimLight);
+
+function buildGrid() {
+  const group = new THREE.Group();
+  const size = 120, step = 6;
+  const groundGeo = new THREE.PlaneGeometry(size, size);
+  const ground = new THREE.Mesh(groundGeo, MAT.ground);
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  group.add(ground);
+
+  for (let i = -size/2; i <= size/2; i += step) {
+    const hGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-size/2, 0.02, i), new THREE.Vector3(size/2, 0.02, i)]);
+    const vGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(i, 0.02, -size/2), new THREE.Vector3(i, 0.02, size/2)]);
+    group.add(new THREE.Line(hGeo, MAT.gridLine));
+    group.add(new THREE.Line(vGeo, MAT.gridLine));
+  }
+  return group;
+}
+
+function createBuilding(w, h, d, x, z, layer = 1) {
+  const group = new THREE.Group();
+  group.userData = { layer, buildState: 0, x, z, isHovered: false };
+  const geo = new THREE.BoxGeometry(w, h, d);
+  const bp = new THREE.Mesh(geo, MAT.blueprint.clone()); bp.userData.type = 'blueprint';
+  const asm = new THREE.Mesh(geo, MAT.assembly.clone()); asm.userData.type = 'assembly'; asm.visible = false;
+  const solid = new THREE.Mesh(geo, MAT.solid.clone()); solid.userData.type = 'solid'; solid.castShadow = true; solid.visible = false;
+  group.add(bp, asm, solid);
+  group.position.set(x, h / 2, z);
+  return group;
+}
+
+function createFrame(w, h, d, x, z) {
+  const group = new THREE.Group();
+  group.userData = { layer: 2, buildState: 0 };
+  const positions = [[-w/2,0,-d/2],[w/2,0,-d/2],[-w/2,0,d/2],[w/2,0,d/2]];
+  positions.forEach(([cx,cy,cz]) => {
+    const col = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, h, 6), MAT.blueprint.clone());
+    col.position.set(cx, h/2, cz); col.castShadow = true; group.add(col);
+  });
+  const beamPairs = [[positions[0], positions[1]], [positions[2], positions[3]], [positions[0], positions[2]], [positions[1], positions[3]]];
+  [0, h/2, h].forEach(y => {
+    beamPairs.forEach(([a, b]) => {
+      const pts = [new THREE.Vector3(a[0], y, a[2]), new THREE.Vector3(b[0], y, b[2])];
+      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), MAT.blueprintGlow.clone()));
+    });
+  });
+  group.position.set(x, 0, z);
+  return group;
+}
+
+function createSilo(r, h, x, z) {
+  const group = new THREE.Group();
+  group.userData = { layer: 1, buildState: 0, isHovered: false };
+  const geo = new THREE.CylinderGeometry(r, r * 1.1, h, 12);
+  const solid = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ color: 0xffffff, emissive: C.cyan, emissiveIntensity: 0.05 }));
+  solid.visible = false; solid.castShadow = true;
+  group.add(new THREE.Mesh(geo, MAT.blueprint.clone()), solid);
+  group.position.set(x, h/2, z);
+  return group;
+}
+
+function buildUnderground() {
+  const group = new THREE.Group();
+  const pipeColor = new THREE.MeshLambertMaterial({ color: 0x90e0ef, emissive: 0x0077b6, emissiveIntensity: 0.1, transparent: true, opacity: 0.85 });
+  [[-8, -5, 0.3], [0, -5, 0.25], [8, -5, 0.2]].forEach(([x, y, r]) => {
+    const pipe = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 80, 8), pipeColor);
+    pipe.rotation.z = Math.PI / 2; pipe.position.set(0, y, x); group.add(pipe);
+  });
+  group.userData = { layer: 0 };
+  return group;
+}
+
+class ParticleSystem {
+  constructor() {
+    this.count = 200;
+    this.geo = new THREE.BufferGeometry();
+    this.positions = new Float32Array(this.count * 3);
+    this.velocities = new Float32Array(this.count * 3);
+    this.ages = new Float32Array(this.count);
+    this.maxAges = new Float32Array(this.count);
+    for (let i = 0; i < this.count; i++) this.spawn(i);
+    this.geo.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+    this.mat = new THREE.PointsMaterial({ color: 0x002244, size: 0.3, transparent: true, opacity: 0.5, sizeAttenuation: true, blending: THREE.NormalBlending, depthWrite: false });
+    this.points = new THREE.Points(this.geo, this.mat);
+  }
+  spawn(i) {
+    const spread = 40;
+    this.positions[i*3] = (Math.random() - .5) * spread;
+    this.positions[i*3+1] = Math.random() * 2;
+    this.positions[i*3+2] = (Math.random() - .5) * spread;
+    this.velocities[i*3] = (Math.random() - .5) * 0.02;
+    this.velocities[i*3+1] = Math.random() * 0.04 + 0.01;
+    this.velocities[i*3+2] = (Math.random() - .5) * 0.02;
+    this.ages[i] = 0; this.maxAges[i] = 80 + Math.random() * 120;
+  }
+  update(intensity = 1.0, mouseX, mouseY) {
+    let worldMouseX = mouseX * 30; let worldMouseY = -mouseY * 30; 
+    for (let i = 0; i < this.count; i++) {
+      this.ages[i]++;
+      if (this.ages[i] > this.maxAges[i]) { this.spawn(i); continue; }
+      this.positions[i*3] += this.velocities[i*3];
+      this.positions[i*3+1] += this.velocities[i*3+1];
+      this.positions[i*3+2] += this.velocities[i*3+2];
+      this.velocities[i*3+1] -= 0.0004;
+      let dx = this.positions[i*3] - worldMouseX; let dy = this.positions[i*3+1] - worldMouseY; 
+      if (dx*dx + dy*dy < 150) { this.velocities[i*3] += dx * 0.0008; this.velocities[i*3+1] += dy * 0.0008; this.velocities[i*3+2] += dy * 0.0008; }
+      this.velocities[i*3] *= 0.98; this.velocities[i*3+2] *= 0.98;
+    }
+    this.geo.attributes.position.needsUpdate = true;
+    this.mat.opacity = 0.5 * intensity; 
+  }
+}
+
+const sceneGroups = {
+  terrain: buildGrid(),
+  underground: buildUnderground(),
+  buildings: new THREE.Group(),
+  frames: new THREE.Group(),
+  silos: new THREE.Group(),
+  particles: new ParticleSystem(),
+};
+
+scene.add(sceneGroups.terrain); scene.add(sceneGroups.underground);
+sceneGroups.underground.position.y = -4;
+
+[[12, 8, 10, -20, -15, 1], [8, 12, 8, 0, -18, 1], [14, 6, 12, 22, -12, 1], [10, 16, 8, -28, 5, 1], [6, 10, 6, 16, 10, 2], [20, 5, 14, 5, 8, 1], [8, 6, 8, -10, 20, 2], [12, 8, 10, 28, 18, 2]]
+.forEach(([w, h, d, x, z, layer]) => sceneGroups.buildings.add(createBuilding(w, h, d, x, z, layer)));
+scene.add(sceneGroups.buildings);
+
+[[8, 14, 6, -14, 5], [10, 18, 8, 10, -5], [6, 12, 5, 28, -5]]
+.forEach(([w, h, d, x, z]) => sceneGroups.frames.add(createFrame(w, h, d, x, z)));
+scene.add(sceneGroups.frames);
+
+[[1.8, 22, -22, 10], [2.5, 18, 30, 5], [1.2, 15, -5, -28]]
+.forEach(([r, h, x, z]) => sceneGroups.silos.add(createSilo(r, h, x, z)));
+scene.add(sceneGroups.silos);
+scene.add(sceneGroups.particles.points);
+
+// Services Page Specific Camera & Build Mapping (Maps to scroll depth)
+const baseCamPos = new THREE.Vector3(-12, 12, 38);
+const baseCamLook = new THREE.Vector3(-4, 4, 0);
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function applyBuildState(group, progress) {
+  group.children.forEach(obj => {
+    if (!obj.userData?.buildState !== undefined) return;
+    if (obj.userData?.layer !== undefined) {
+      const layerOffset = obj.userData.layer === 0 ? 0 : obj.userData.layer === 2 ? 0.2 : 0.1;
+      const localProg = Math.max(0, Math.min(1, (progress - layerOffset) / 0.8));
+      obj.scale.y = 0.05 + localProg * 0.95;
+      
+      const targetScaleXZ = obj.userData.isHovered ? 1.05 : 1.0;
+      if(obj.scale.x === undefined) obj.scale.x = 1;
+      obj.scale.x = lerp(obj.scale.x, targetScaleXZ, 0.1);
+      obj.scale.z = obj.scale.x;
+
+      obj.children.forEach(mesh => {
+        if (!mesh.userData?.type) return;
+        const t = mesh.userData.type;
+        if (t === 'blueprint') { mesh.visible = localProg < 0.5; if (mesh.material) mesh.material.opacity = (0.5 - localProg) * 0.35; } 
+        else if (t === 'assembly') { mesh.visible = localProg >= 0.3 && localProg < 0.85; if (mesh.material) mesh.material.opacity = Math.sin(localProg * Math.PI) * 0.85; } 
+        else if (t === 'solid') { mesh.visible = localProg >= 0.7; if (mesh.material) { mesh.material.opacity = Math.min(1, (localProg - 0.7) / 0.3); mesh.material.emissiveIntensity = obj.userData.isHovered ? 0.3 : 0.05; } }
+      });
+    }
+  });
+}
+
+function applyFrameState(progress) {
+  sceneGroups.frames.children.forEach((frame, fi) => {
+    const lp = Math.max(0, Math.min(1, (progress - fi * 0.1) / 0.7));
+    frame.children.forEach(child => { if (child.material) { if (child instanceof THREE.Line) { child.material.opacity = 0.1 + lp * 0.25; } else { child.material.opacity = 0.1 + lp * 0.2; child.material.emissiveIntensity = lp * 0.1; } } });
+    frame.scale.y = Math.max(0.02, lp);
+  });
+}
+
+// Interactivity
+function handleMove(cx, cy) {
+  state.targetMouse.x = (cx / window.innerWidth - 0.5) * 2;
+  state.targetMouse.y = (cy / window.innerHeight - 0.5) * 2;
+}
+
+window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+window.addEventListener('touchstart', (e) => handleMove(e.touches[0].clientX, e.touches[0].clientY), {passive: true});
+
+function onScroll() {
+  const total = document.body.scrollHeight - window.innerHeight;
+  state.scroll = Math.max(0, Math.min(1, window.scrollY / total));
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+document.addEventListener('visibilitychange', () => state.visible = !document.hidden);
+document.querySelectorAll('.reveal').forEach(el => new IntersectionObserver(e => e.forEach((x,i) => { if(x.isIntersecting) setTimeout(() => x.target.classList.add('visible'), i*80) }), {threshold:0.1}).observe(el));
+
+const stateEl = document.getElementById('stateLabel');
+let lastTime = 0;
+
+// Hover specific to Service Rows linking to 3D Buildings
+document.querySelectorAll('.svc-row').forEach((row, index) => {
+  row.addEventListener('mouseenter', () => {
+     // Highlight random buildings when hovering services
+     const targetIdx = index % sceneGroups.buildings.children.length;
+     sceneGroups.buildings.children.forEach((b, i) => b.userData.isHovered = (i === targetIdx || i === targetIdx+1));
+  });
+  row.addEventListener('mouseleave', () => {
+     sceneGroups.buildings.children.forEach(b => b.userData.isHovered = false);
+  });
+});
+
+function animate(now = 0) {
+  requestAnimationFrame(animate);
+  if (!state.visible) return;
+  const dt = Math.min((now - lastTime) / 1000, 0.05);
+  lastTime = now; state.time += dt;
+
+  state.mouse.x = lerp(state.mouse.x, state.targetMouse.x, 0.08);
+  state.mouse.y = lerp(state.mouse.y, state.targetMouse.y, 0.08);
+
+  // Dynamic Camera & Build State based on Scroll
+  // As user scrolls down services, buildings assemble and camera pans
+  const buildProg = 0.3 + (state.scroll * 0.7); // 0.3 -> 1.0
+  const camX = baseCamPos.x + (state.scroll * 15);
+  const camZ = baseCamPos.z - (state.scroll * 10);
+  
+  camera.position.set(camX, baseCamPos.y, camZ);
+  camera.position.x += state.mouse.x * 4.0;
+  camera.position.y += -state.mouse.y * 2.5;
+  camera.lookAt(baseCamLook);
+
+  applyBuildState(sceneGroups.buildings, buildProg);
+  applyBuildState(sceneGroups.silos, buildProg);
+  applyFrameState(buildProg);
+
+  sunLight.intensity = lerp(0.6, 0.9, state.scroll);
+  sceneGroups.underground.position.y = buildProg < 0.15 ? 0 : -4;
+  
+  sceneGroups.particles.update(Math.max(0, 1 - Math.abs(buildProg - 0.5) * 3), state.mouse.x, state.mouse.y);
+  sceneGroups.terrain.children.forEach(c => { if(c.material && c.material !== MAT.gridLine) c.material.opacity = 0.08 + Math.sin(state.time*0.5)*0.06; });
+
+  sceneGroups.buildings.rotation.y = state.mouse.x * 0.05 + (state.scroll * 0.2);
+  sceneGroups.frames.rotation.y = sceneGroups.buildings.rotation.y;
+  sceneGroups.silos.rotation.y  = sceneGroups.buildings.rotation.y;
+
+  if(state.scroll < 0.1) stateEl.textContent = 'Engineering Disciplines';
+  else if(state.scroll > 0.8) stateEl.textContent = 'Structural Integrity Phase';
+  else stateEl.textContent = 'Assembly Phase';
+
+  renderer.render(scene, camera);
+}
+
+animate();
+</script>
+</body>
+</html>
