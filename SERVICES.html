@@ -103,7 +103,7 @@ nav {
 
 .svc-row {
   display: grid;
-  grid-template-columns: 80px 1.5fr 2fr 40px;
+  grid-template-columns: 80px 1.5fr 2fr 200px 40px; /* Added column for image */
   align-items: center;
   gap: 2rem;
   padding: 3.5rem 2rem;
@@ -183,12 +183,44 @@ nav {
   line-height: 1.7;
 }
 
+/* ── PREMIUM IMAGE INTEGRATION ───────── */
+.svc-image {
+  width: 100%;
+  height: 110px;
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-strong);
+}
+
+.svc-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1);
+  transition: filter 0.6s ease, transform 0.6s ease;
+}
+
+.svc-row:hover .svc-image {
+  opacity: 1;
+  transform: translateX(0);
+  box-shadow: 0 10px 20px rgba(0, 173, 239, 0.15);
+}
+
+.svc-row:hover .svc-image img {
+  filter: grayscale(0%) contrast(1);
+  transform: scale(1.05);
+}
+
 .svc-arrow {
   color: var(--accent-cyan);
   font-size: 1.5rem;
   opacity: 0;
   transform: translateX(-15px);
   transition: all 0.4s ease;
+  justify-self: end;
 }
 
 .svc-row:hover .svc-arrow {
@@ -233,9 +265,10 @@ footer {
   nav { padding:1rem 1.5rem; }
   .nav-links { display:none; }
   .page-section { padding:6rem 1.5rem 4rem; }
-  .svc-row { grid-template-columns: 1fr; gap: 1rem; padding: 2.5rem 1.5rem; }
-  .svc-num { display: none; }
-  .svc-arrow { display: none; }
+  .svc-row { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2.5rem 1.5rem; }
+  .svc-image { width: 100%; height: 200px; opacity: 1; transform: none; margin-top: 1rem; }
+  .svc-image img { filter: grayscale(0%); }
+  .svc-num, .svc-arrow { display: none; }
   footer { padding:2rem 1.5rem; }
 }
 </style>
@@ -294,6 +327,7 @@ footer {
 
       <div class="services-list" data-scene="services-list">
         
+        <!-- SERVICE 1 -->
         <a href="#" class="svc-row reveal">
           <div class="svc-num">01</div>
           <div class="svc-title-wrap">
@@ -301,9 +335,14 @@ footer {
             <h3 class="svc-title">Architectural Layout Design</h3>
           </div>
           <p class="svc-desc">Master layout planning, precise CAD documentation, and regulatory compliance mapping designed explicitly for industrial scale facilities and admin complexes.</p>
+          <div class="svc-image">
+            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800" alt="Architectural Layout">
+          </div>
           <div class="svc-arrow">↗</div>
         </a>
 
+        <!-- SERVICE 2 -->
         <a href="#" class="svc-row reveal">
           <div class="svc-num">02</div>
           <div class="svc-title-wrap">
@@ -311,9 +350,14 @@ footer {
             <h3 class="svc-title">Structural RCC Engineering</h3>
           </div>
           <p class="svc-desc">Engineered foundations, load-bearing frames, and heavy slabs designed for maximum dynamic durability and strict IS code adherence.</p>
+          <div class="svc-image">
+            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
+            <img src="https://images.unsplash.com/photo-1541888081696-6e3e1fffa280?auto=format&fit=crop&q=80&w=800" alt="RCC Works">
+          </div>
           <div class="svc-arrow">↗</div>
         </a>
 
+        <!-- SERVICE 3 -->
         <a href="#" class="svc-row reveal">
           <div class="svc-num">03</div>
           <div class="svc-title-wrap">
@@ -321,9 +365,14 @@ footer {
             <h3 class="svc-title">Heavy Machine Foundations</h3>
           </div>
           <p class="svc-desc">Advanced vibration isolation and dynamic load analysis engineered for turbines, compressors, and high-impact industrial presses.</p>
+          <div class="svc-image">
+            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Heavy Machinery">
+          </div>
           <div class="svc-arrow">↗</div>
         </a>
 
+        <!-- SERVICE 4 -->
         <a href="#" class="svc-row reveal">
           <div class="svc-num">04</div>
           <div class="svc-title-wrap">
@@ -331,9 +380,14 @@ footer {
             <h3 class="svc-title">Industrial Infrastructure</h3>
           </div>
           <p class="svc-desc">Comprehensive internal routing including heavy-duty transportation roads, storm drainage networks, and integrated utility corridors.</p>
+          <div class="svc-image">
+            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
+            <img src="https://images.unsplash.com/photo-1590483866299-1589d83769c0?auto=format&fit=crop&q=80&w=800" alt="Industrial Roads & Drainage">
+          </div>
           <div class="svc-arrow">↗</div>
         </a>
 
+        <!-- SERVICE 5 -->
         <a href="#" class="svc-row reveal">
           <div class="svc-num">05</div>
           <div class="svc-title-wrap">
@@ -341,9 +395,14 @@ footer {
             <h3 class="svc-title">Storage & Process Structures</h3>
           </div>
           <p class="svc-desc">Large-span pre-engineered sheds, bulk storage silos, and emission management chimneys constructed for operational resilience.</p>
+          <div class="svc-image">
+            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
+            <img src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=800" alt="Industrial Silos">
+          </div>
           <div class="svc-arrow">↗</div>
         </a>
 
+        <!-- SERVICE 6 -->
         <a href="#" class="svc-row reveal">
           <div class="svc-num">06</div>
           <div class="svc-title-wrap">
@@ -351,6 +410,10 @@ footer {
             <h3 class="svc-title">Project & Contract Management</h3>
           </div>
           <p class="svc-desc">Techno-commercial tendering, precision vendor selection, and end-to-end site supervision to ensure uncompromised execution.</p>
+          <div class="svc-image">
+            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800" alt="Project Management">
+          </div>
           <div class="svc-arrow">↗</div>
         </a>
 
@@ -686,7 +749,6 @@ function animate(now = 0) {
   state.mouse.y = lerp(state.mouse.y, state.targetMouse.y, 0.08);
 
   // Dynamic Camera & Build State based on Scroll
-  // As user scrolls down services, buildings assemble and camera pans
   const buildProg = 0.3 + (state.scroll * 0.7); // 0.3 -> 1.0
   const camX = baseCamPos.x + (state.scroll * 15);
   const camZ = baseCamPos.z - (state.scroll * 10);
