@@ -114,7 +114,7 @@ nav {
 /* ── SCROLL CONTAINER ───────────────────────── */
 #scroll-container { position:relative; z-index:10; pointer-events:none; }
 .page-section { pointer-events:none; }
-.hero-content {
+.hero-content, .hero-scroll-hint, .marquee-wrap {
   pointer-events:auto;
 }
 
@@ -159,16 +159,54 @@ nav {
   max-width:480px; margin-bottom:3rem;
   animation:fadeUp .8s .8s ease both;
 }
-
+.hero-scroll-hint {
+  position:absolute; bottom:3rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:.6rem;
+  animation:fadeUp .8s 1.4s ease both;
+}
+.scroll-line {
+  width:1px; height:60px; background:linear-gradient(to bottom,var(--accent-cyan),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{0%,100%{opacity:.2;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+.scroll-label { font-size:.65rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent-navy); font-weight: 600;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── SECTION STYLES ──────────────────────────── */
 .sec-bg-dark { background:var(--bg-glass); }
+.sec-bg-mid  { background:rgba(240,244,248,0.85); }
+.sec-label {
+  font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--accent-cyan); font-weight:700; margin-bottom:.7rem;
+}
+.sec-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:700; line-height:1.15; margin-bottom:1.2rem; color:var(--text-main);
+}
+.sec-title em { font-style:italic; color:var(--accent-cyan); }
+.sec-desc { color:var(--text-muted); font-size:.96rem; line-height:1.8; max-width:520px; }
+
+/* ── MARQUEE ──────────────────────────────────── */
+.marquee-wrap {
+  position:relative; z-index:50;
+  background:var(--gradient-primary); overflow:hidden;
+  padding:1rem 0; white-space:nowrap;
+}
+.marquee-track {
+  display:inline-flex;
+  animation:marquee 30s linear infinite;
+}
+.marquee-track span {
+  font-size:.75rem; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--bg-main); padding:0 2.5rem;
+}
+.marquee-track span::after { content:'◆'; margin-left:2.5rem; opacity:.3; }
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── FOOTER ──────────────────────────────────── */
 footer {
-  position:fixed; bottom: 0; left: 0; right: 0;
-  z-index:50;
+  position:relative; z-index:50;
   background:var(--accent-navy); border-top:1px solid var(--border);
   padding:2.5rem 4rem; color:var(--bg-main);
   display:flex; justify-content:space-between; align-items:center;
@@ -186,9 +224,21 @@ footer {
 .reveal { opacity:0; transform:translateY(30px); transition:opacity .75s ease,transform .75s ease; }
 .reveal.visible { opacity:1; transform:none; }
 
+/* ── SCENE STATE INDICATOR ───────────────────── */
+.scene-indicator {
+  position:fixed; right:2rem; top:50%; transform:translateY(-50%);
+  z-index:500; display:flex; flex-direction:column; gap:.6rem;
+  pointer-events:auto;
+}
+.si-dot {
+  width:6px; height:6px; border-radius:50%; border:1px solid var(--border-strong);
+  background:transparent; transition:all .4s; cursor:pointer;
+}
+.si-dot.active { background:var(--accent-cyan); border-color:var(--accent-cyan); transform:scale(1.4); }
+
 /* ── 3D STATE BADGE ───────────────────────────── */
 .state-badge {
-  position:fixed; bottom:8rem; left:50%; transform:translateX(-50%);
+  position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
   z-index:500; display:flex; align-items:center; gap:.8rem;
   padding:.5rem 1.4rem; background:var(--bg-glass);
   border:1px solid var(--border); border-radius:3px;
@@ -206,8 +256,8 @@ footer {
   nav { padding:1rem 1.5rem; }
   .nav-links { display:none; }
   .page-section { padding:5rem 1.5rem 4rem; }
-  footer { padding:2rem 1.5rem; position: relative;}
-  .state-badge { bottom: 2rem; }
+  footer { padding:2rem 1.5rem; }
+  .scene-indicator { display:none; }
 }
 </style>
 </head>
@@ -221,6 +271,12 @@ footer {
 
 <!-- SCENE STATE BADGE -->
 <div class="state-badge"><span class="state-badge-text" id="stateLabel">Initializing Scene...</span></div>
+
+<!-- SCENE PAGE INDICATORS -->
+<div class="scene-indicator">
+  <div class="si-dot active" data-target="sec-home"></div>
+  <div class="si-dot" data-target="sec-philosophy"></div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -248,6 +304,9 @@ footer {
   </a>
   <div class="nav-links">
     <a href="#sec-home" class="active" data-nav>Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
   </div>
 </nav>
 
@@ -257,9 +316,31 @@ footer {
   <!-- ── HOME ─────────────────────────────────── -->
   <section id="sec-home" class="page-section sec-bg-dark" data-scene="home">
     <div class="hero-content">
-      <div class="hero-badge">Est. 2+ Years · LLP · GST Registered · Hyderabad</div>
-      <h1 class="hero-title">Engineering<br><em>Excellence.</em><br>Built to Last.</h1>
-      <p class="hero-sub">End-to-end civil, structural, and architectural consultancy for industrial and infrastructure projects across Telangana and beyond.</p>
+      <div class="hero-badge">Industrial Scale · Technical Precision</div>
+      <h1 class="hero-title">Architectural<br><em>Vision.</em><br>Structural Truth.</h1>
+      <p class="hero-sub">Mastering the balance between industrial functionality and uncompromising engineering excellence for the built environment.</p>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span class="scroll-label">Discover</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap" style="position:relative;z-index:50;">
+    <div class="marquee-track">
+      <span>Structural Integrity</span><span>Architectural Precision</span><span>Industrial Scale</span><span>Engineering Excellence</span><span>Design Innovation</span>
+      <span>Structural Integrity</span><span>Architectural Precision</span><span>Industrial Scale</span><span>Engineering Excellence</span><span>Design Innovation</span>
+      <span>Structural Integrity</span><span>Architectural Precision</span><span>Industrial Scale</span><span>Engineering Excellence</span><span>Design Innovation</span>
+    </div>
+  </div>
+
+  <!-- ── PHILOSOPHY (Replaces Heavy Content) ───── -->
+  <section id="sec-philosophy" class="page-section sec-bg-mid" data-scene="philosophy" style="flex-direction:column;align-items:flex-start;">
+    <div class="reveal">
+      <div class="sec-label">Our Philosophy</div>
+      <h2 class="sec-title">Built on<br><em>Precision.</em></h2>
+      <p class="sec-desc">Every structure we engineer is a testament to rigorous analysis and visionary execution. We strip away the superfluous, focusing entirely on delivering architectural integrity that stands the test of time and scale.</p>
     </div>
   </section>
 
@@ -286,6 +367,9 @@ footer {
   </div>
   <div class="ft-links">
     <a href="#sec-home">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
   </div>
   <div class="ft-copy">© 2024 Sai Meghana Technical Consultants LLP. All rights reserved.</div>
 </footer>
@@ -371,11 +455,11 @@ const MAT = {
   }),
 };
 
-// ── LIGHTS ───────────────────────────────────────────────
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); 
+// ── LIGHTS (Slightly balanced for better clarity) ────────
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.55); 
 scene.add(ambientLight);
 
-const sunLight = new THREE.DirectionalLight(0xffffff, 0.5);
+const sunLight = new THREE.DirectionalLight(0xffffff, 0.65);
 sunLight.position.set(30, 60, 20);
 sunLight.castShadow = true;
 sunLight.shadow.mapSize.set(1024, 1024);
@@ -388,11 +472,11 @@ sunLight.shadow.camera.bottom = -80;
 sunLight.shadow.bias = -0.001;
 scene.add(sunLight);
 
-const cyanLight = new THREE.PointLight(0x002244, 0.8, 80);
+const cyanLight = new THREE.PointLight(0x002244, 1.0, 80);
 cyanLight.position.set(0, 20, 10);
 scene.add(cyanLight);
 
-const rimLight = new THREE.DirectionalLight(0x004d99, 0.3);
+const rimLight = new THREE.DirectionalLight(0x004d99, 0.5);
 rimLight.position.set(-30, 10, -20);
 scene.add(rimLight);
 
@@ -654,9 +738,9 @@ scene.add(sceneGroups.silos);
 scene.add(sceneGroups.particles.points);
 
 // ── SECTION → SCENE STATE MAP ────────────────────────────
-// Single state to present completed structural framework immediately 
 const SECTION_STATES = {
-  home: { camPos: [0, 14, 52],  camLook: [0, 2, 0], buildState: 1.0, lightIntensity: 0.8, label: 'Complete — Structural Framework' },
+  home:       { camPos: [0, 14, 52],   camLook: [0, 2, 0],   buildState: 0.1, lightIntensity: 0.7, label: 'Master Layout' },
+  philosophy: { camPos: [-12, 10, 28], camLook: [4, 4, -4],  buildState: 1.0, lightIntensity: 0.9, label: 'Structural Completion' },
 };
 
 // ── BUILD STATE APPLIER (With Hover Logic) ───────────────
@@ -770,6 +854,26 @@ window.addEventListener('touchmove', (e) => {
 }, {passive: true});
 
 
+// ── SCROLL DETECTION ─────────────────────────────────────
+function getCurrentSection() {
+  const sections = document.querySelectorAll('[data-scene]');
+  let current = 'home';
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.55) {
+      current = sec.dataset.scene;
+    }
+  });
+  return current;
+}
+
+function onScroll() {
+  const total = document.body.scrollHeight - window.innerHeight;
+  state.scroll = Math.max(0, Math.min(1, window.scrollY / total));
+  state.section = getCurrentSection();
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -780,8 +884,42 @@ document.addEventListener('visibilitychange', () => {
   state.visible = !document.hidden;
 });
 
-const camPositions = { home: new THREE.Vector3(0, 14, 52) };
-const camLooks = { home: new THREE.Vector3(0, 2, 0) };
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// ── NAV ACTIVE + DOTS ────────────────────────────────────
+const navLinks = document.querySelectorAll('[data-nav]');
+const siDots = document.querySelectorAll('.si-dot');
+
+function updateNavAndDots() {
+  const sec = state.section;
+  navLinks.forEach(a => {
+    const href = a.getAttribute('href').replace('#','');
+    a.classList.toggle('active', href === `sec-${sec}`);
+  });
+  siDots.forEach((dot, i) => {
+    dot.classList.toggle('active', dot.dataset.target === `sec-${sec}`);
+  });
+}
+
+siDots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    document.getElementById(dot.dataset.target)?.scrollIntoView({ behavior:'smooth' });
+  });
+});
+
+const camPositions = {
+  home:       new THREE.Vector3(0, 14, 52),
+  philosophy: new THREE.Vector3(-12, 10, 28)
+};
+const camLooks = {
+  home:       new THREE.Vector3(0, 2, 0),
+  philosophy: new THREE.Vector3(4, 4, -4)
+};
 
 const currentCamPos  = new THREE.Vector3().copy(camPositions.home);
 const currentCamLook = new THREE.Vector3().copy(camLooks.home);
@@ -888,6 +1026,7 @@ function animate(now = 0) {
   sceneGroups.silos.rotation.y  = sceneGroups.buildings.rotation.y;
 
   stateEl.textContent = ss.label;
+  updateNavAndDots();
 
   renderer.render(scene, camera);
 }
