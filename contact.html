@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact & Enquiry | Sai Meghna Technical Consultants LLP</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET & ROOT ─────────────────────────────── */
+:root {
+  --bg-main: #ffffff;
+  --bg-alt: #f0f4f8; 
+  --bg-glass: rgba(255, 255, 255, 0.92);
+  
+  --text-main: #001229;
+  --text-muted: #4a5d73;
+  --text-light: #8b9eb3;
+  
+  --accent-cyan: #00adef;
+  --accent-navy: #002147;
+  --gradient-primary: linear-gradient(135deg, #00adef, #004d99);
+  
+  --border: rgba(0, 173, 239, 0.15);
+  --border-strong: rgba(0, 173, 239, 0.35);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg-main); color:var(--text-main);
+  overflow-x:hidden;
+}
+
+/* ── 3D CANVAS ───────────────────────────────── */
+#three-canvas {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  z-index:0; 
+  pointer-events:auto; 
+}
+
+/* ── NAV & LOGO ──────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  padding:1rem 4rem;
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--bg-glass);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  animation:slideDown .8s ease both;
+  pointer-events: auto;
+}
+@keyframes slideDown { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: var(--text-main);
+  transition: opacity 0.3s ease;
+}
+.nav-brand:hover {
+  opacity: 0.8;
+}
+.brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+}
+.brand-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.brand-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.brand-text span {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+}
+
+.nav-links { display:flex; gap:2.5rem; }
+.nav-links a {
+  text-decoration:none; color:var(--text-muted);
+  font-size:.82rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase;
+  transition:color .3s; position:relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:2px; background:var(--accent-cyan);
+  transform:scaleX(0); transition:transform .35s;
+}
+.nav-links a:hover, .nav-links a.active { color:var(--accent-navy); }
+.nav-links a:hover::after, .nav-links a.active::after { transform:scaleX(1); }
+
+/* ── SCROLL CONTAINER ───────────────────────── */
+#scroll-container { position:relative; z-index:10; pointer-events:none; }
+.page-section { pointer-events:none; }
+.hero-content, .hero-scroll-hint, .content-block, .contact-wrapper, .why-us-grid {
+  pointer-events:auto;
+}
+
+/* ── PAGE SECTIONS ──────────────────────────── */
+.page-section {
+  min-height:100vh;
+  display:flex; align-items:center;
+  padding:7rem 4rem 5rem;
+  position:relative;
+}
+
+/* ── HERO ────────────────────────────────────── */
+#sec-contact-hero {
+  min-height:100vh;
+  background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.7) 60%, rgba(255,255,255,1) 100%);
+}
+.hero-content { max-width:720px; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:.38rem 1rem; border:1px solid var(--border-strong); border-radius:3px;
+  margin-bottom:2rem; font-size:.72rem; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent-navy);
+  background:var(--bg-glass);
+  animation:fadeUp .8s .4s ease both;
+}
+.hero-badge::before {
+  content:''; width:5px; height:5px; border-radius:50%;
+  background:var(--accent-cyan); animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,5.5vw,4.8rem);
+  font-weight:700; line-height:1.07;
+  margin-bottom:1.6rem; color:var(--text-main);
+  animation:fadeUp .8s .6s ease both;
+}
+.hero-title em { font-style:italic; color:var(--accent-cyan); }
+.hero-sub {
+  font-size:1.05rem; color:var(--text-muted); line-height:1.8;
+  max-width:550px; margin-bottom:3rem;
+  animation:fadeUp .8s .8s ease both;
+}
+.hero-scroll-hint {
+  position:absolute; bottom:3rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:.6rem;
+  animation:fadeUp .8s 1.4s ease both;
+}
+.scroll-line {
+  width:1px; height:60px; background:linear-gradient(to bottom,var(--accent-cyan),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{0%,100%{opacity:.2;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+.scroll-label { font-size:.65rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent-navy); font-weight: 600;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION STYLES ──────────────────────────── */
+.sec-bg-dark { background:var(--bg-glass); }
+.sec-bg-mid  { background:rgba(240,244,248,0.85); }
+.sec-label {
+  font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--accent-cyan); font-weight:700; margin-bottom:.7rem;
+}
+.sec-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:700; line-height:1.15; margin-bottom:1.2rem; color:var(--text-main);
+}
+.sec-title em { font-style:italic; color:var(--accent-cyan); }
+.sec-desc { color:var(--text-muted); font-size:.96rem; line-height:1.8; max-width:600px; }
+
+/* ── WHY US GRID ────────────────────────────── */
+.why-us-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3.5rem;
+  width: 100%;
+  max-width: 1200px;
+}
+.advantage-card {
+  background: var(--bg-main);
+  padding: 2.5rem;
+  border-left: 3px solid var(--accent-cyan);
+  box-shadow: 0 10px 30px rgba(0, 18, 41, 0.04);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.advantage-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 173, 239, 0.08);
+}
+.advantage-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--border-strong);
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+.advantage-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+  margin-bottom: 0.8rem;
+}
+.advantage-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ── CONTACT & ENQUIRY FORM ──────────────────── */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 3rem;
+}
+
+.contact-info-box {
+  background: var(--accent-navy);
+  padding: 3.5rem;
+  color: var(--bg-main);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.info-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-cyan);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.info-detail {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+.info-detail a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.info-detail a:hover {
+  color: var(--accent-cyan);
+}
+.info-address {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-light);
+}
+
+.enquiry-form {
+  background: var(--bg-main);
+  padding: 3.5rem;
+  box-shadow: 0 10px 40px rgba(0, 18, 41, 0.05);
+  border-top: 4px solid var(--accent-cyan);
+}
+.form-group {
+  margin-bottom: 2rem;
+  position: relative;
+}
+.form-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  padding: 0.8rem 0;
+  color: var(--text-main);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+}
+.form-input::placeholder {
+  color: var(--text-light);
+}
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+}
+.submit-btn {
+  background: var(--gradient-primary);
+  color: #fff;
+  border: none;
+  padding: 1.2rem 2.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 100%;
+  margin-top: 1rem;
+}
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(0, 173, 239, 0.25);
+}
+
+/* ── FOOTER ──────────────────────────────────── */
+footer {
+  position:relative; z-index:50;
+  background:var(--accent-navy); border-top:1px solid var(--border);
+  padding:2.5rem 4rem; color:var(--bg-main);
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:1.5rem;
+  pointer-events: auto;
+}
+.ft-brand { font-family:'DM Sans',sans-serif; font-size:1.1rem; font-weight:600; color:var(--bg-main); letter-spacing:0.05em;}
+.ft-meta { font-size:.75rem; color:var(--text-light); margin-top:5px; }
+.ft-links { display:flex; gap:2rem; }
+.ft-links a { font-size:.75rem; color:var(--text-light); text-decoration:none; text-transform:uppercase; letter-spacing:.08em; transition:color .3s; font-weight:600;}
+.ft-links a:hover { color:var(--accent-cyan); }
+.ft-copy { font-size:.73rem; color:var(--text-light); }
+
+/* ── REVEAL ANIMATION ────────────────────────── */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity .75s ease,transform .75s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ── SCENE STATE INDICATOR ───────────────────── */
+.scene-indicator {
+  position:fixed; right:2rem; top:50%; transform:translateY(-50%);
+  z-index:500; display:flex; flex-direction:column; gap:.6rem;
+  pointer-events:auto;
+}
+.si-dot {
+  width:6px; height:6px; border-radius:50%; border:1px solid var(--border-strong);
+  background:transparent; transition:all .4s; cursor:pointer;
+}
+.si-dot.active { background:var(--accent-cyan); border-color:var(--accent-cyan); transform:scale(1.4); }
+
+/* ── 3D STATE BADGE ───────────────────────────── */
+.state-badge {
+  position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
+  z-index:500; display:flex; align-items:center; gap:.8rem;
+  padding:.5rem 1.4rem; background:var(--bg-glass);
+  border:1px solid var(--border); border-radius:3px;
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent-navy); backdrop-filter:blur(10px);
+  transition:opacity .5s; box-shadow: 0 4px 20px rgba(0,173,239,0.08);
+}
+.state-badge::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--accent-cyan); animation:blink 2s infinite; }
+.state-badge-text { color:var(--accent-navy); font-weight:700; }
+
+/* ── PERF OVERLAY ─────────────────────────────── */
+#perf { position:fixed; top:5rem; right:1rem; z-index:999; font-size:.65rem; color:var(--text-light); font-family:monospace; pointer-events:none; }
+
+@media(max-width:1000px){
+  .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media(max-width:900px){
+  nav { padding:1rem; flex-direction: column; gap: 1rem; justify-content: center; }
+  .nav-brand { justify-content: center; }
+  .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; }
+  .page-section { padding: 8rem 1.5rem 4rem; } 
+  footer { padding:2rem 1.5rem; }
+  .scene-indicator { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- THREE.JS CANVAS -->
+<canvas id="three-canvas"></canvas>
+
+<!-- PERF COUNTER -->
+<div id="perf">FPS: --</div>
+
+<!-- SCENE STATE BADGE -->
+<div class="state-badge"><span class="state-badge-text" id="stateLabel">Initializing Secure Connection...</span></div>
+
+<!-- SCENE PAGE INDICATORS -->
+<div class="scene-indicator">
+  <div class="si-dot active" data-target="sec-contact-hero"></div>
+  <div class="si-dot" data-target="sec-why-us"></div>
+  <div class="si-dot" data-target="sec-enquiry"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(100, 5)">
+          <polygon points="0,0 22,25 0,16" fill="#001a4d" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,0 -22,25 0,16" fill="#00a8e8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,11 44,48 0,33" fill="#002b66" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,11 -44,48 0,33" fill="#00b4d8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,22 66,71 0,50" fill="#003c80" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,22 -66,71 0,50" fill="#00c0f0" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,33 88,94 0,67" fill="#004d99" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,33 -88,94 0,67" fill="#00ccff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,44 110,117 0,84" fill="#0066b3" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="0,44 -110,117 0,84" fill="#00d4ff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+    <div class="brand-text">
+      Sai Meghna
+      <span>Technical Consultants</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="SERVICES.html">Services</a>
+    <a href="contact.html" class="active" data-nav>Contact</a>
+  </div>
+</nav>
+
+<!-- SCROLL CONTAINER -->
+<div id="scroll-container">
+
+  <!-- ── CONTACT HERO ─────────────────────────────────── -->
+  <section id="sec-contact-hero" class="page-section sec-bg-dark" data-scene="contact-hero">
+    <div class="hero-content">
+      <div class="hero-badge">Engage Our Team</div>
+      <h1 class="hero-title">Initiate Your<br><em>Project.</em></h1>
+      <p class="hero-sub">From initial feasibility to final architectural execution, partner with us to ensure your industrial and commercial developments meet the highest standards of engineering compliance.</p>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span class="scroll-label">Discover Why Us</span>
+    </div>
+  </section>
+
+  <!-- ── WHY HIRE US ───────────────────────────────── -->
+  <section id="sec-why-us" class="page-section sec-bg-mid" data-scene="why-us" style="flex-direction:column;align-items:flex-start;">
+    <div class="reveal content-block">
+      <div class="sec-label">The SMTC LLP Advantage</div>
+      <h2 class="sec-title">Why Partner With<br><em>Sai Meghna?</em></h2>
+      <p class="sec-desc">We do not just supervise; we engineer success. Our integrated approach ensures that complex regulatory demands and heavy-duty industrial requirements are met flawlessly.</p>
+      
+      <div class="why-us-grid">
+        <div class="advantage-card">
+          <div class="advantage-number">01</div>
+          <h3 class="advantage-title">Regulatory Authority</h3>
+          <p class="advantage-text">Fully registered under RoC-Hyderabad (LLPIN ACG-9049). We navigate the complexities of the LLP Act and local compliance, ensuring your project begins on an airtight legal and structural foundation.</p>
+        </div>
+        
+        <div class="advantage-card">
+          <div class="advantage-number">02</div>
+          <h3 class="advantage-title">Advanced Visualization</h3>
+          <p class="advantage-text">Beyond traditional blueprints, we leverage cinematic real-time industrial visualization ecosystems to provide unparalleled clarity, allowing stakeholders to experience the architecture dynamically before ground is broken.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="advantage-number">03</div>
+          <h3 class="advantage-title">Uncompromising Oversight</h3>
+          <p class="advantage-text">Our civil supervision teams embed themselves into the execution phase, enforcing stringent quality controls to bridge the gap between initial architectural theory and final physical reality.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ENQUIRY & CONTACT FORM ──────────────────────── -->
+  <section id="sec-enquiry" class="page-section sec-bg-dark" data-scene="enquiry" style="flex-direction:column;align-items:flex-start;">
+    <div class="reveal content-block" style="width: 100%;">
+      <div class="sec-label">Connect With Us</div>
+      <h2 class="sec-title">Submit Your<br><em>Enquiry.</em></h2>
+      
+      <div class="contact-wrapper">
+        <!-- Direct Info Box -->
+        <div class="contact-info-box">
+          <div class="info-label">Direct Communication</div>
+          <div class="info-detail">
+            <a href="mailto:smtcllp2024@gmail.com">smtcllp2024@gmail.com</a>
+          </div>
+          
+          <div class="info-label" style="margin-top: 1rem;">Corporate Registry</div>
+          <div class="info-address">
+            LLPIN: ACG-9049<br>
+            Registered under RoC-Hyderabad<br>
+            Telangana, India
+          </div>
+        </div>
+
+        <!-- HTML Form Integration -->
+        <div class="enquiry-form">
+          <form action="mailto:smtcllp2024@gmail.com" method="post" enctype="text/plain">
+            <div class="form-group">
+              <input type="text" name="Name" class="form-input" placeholder="Full Name or Company" required>
+            </div>
+            
+            <div class="form-group">
+              <input type="email" name="Email" class="form-input" placeholder="Email Address" required>
+            </div>
+            
+            <div class="form-group">
+              <input type="tel" name="Phone" class="form-input" placeholder="Contact Number">
+            </div>
+            
+            <div class="form-group">
+              <select name="Service_Interest" class="form-input" required>
+                <option value="" disabled selected>Primary Service Interest</option>
+                <option value="Civil Supervision">Civil & Infrastructure Supervision</option>
+                <option value="Project Consultancy">Project Consultancy & DPR</option>
+                <option value="Architectural Design">Architectural Construction Services</option>
+                <option value="Other">Other Enquiry</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <textarea name="Project_Details" class="form-input" placeholder="Briefly describe your project requirements..." required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Initialize Enquiry</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /scroll-container -->
+
+<footer>
+  <div>
+    <div class="ft-brand" style="display:flex;align-items:center;gap:12px;">
+      <div style="width: 32px; height: 32px;">
+        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(100, 5)">
+            <polygon points="0,0 22,25 0,16" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,0 -22,25 0,16" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 44,48 0,33" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 -44,48 0,33" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 66,71 0,50" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 -66,71 0,50" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </div>
+      SAI MEGHNA TECHNICAL CONSULTANTS
+    </div>
+    <div class="ft-meta">Hyderabad, Telangana · GST: 36**********1ZZ · Reg. Oct 2024</div>
+  </div>
+  <div class="ft-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="SERVICES.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="ft-copy">© 2024 Sai Meghna Technical Consultants LLP. All rights reserved.</div>
+</footer>
+
+<!-- THREE.JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════
+   SAI MEGHNA — INTERACTIVE 3D BACKGROUND ENGINE
+   Architecture: Three.js r128
+   Theme: Deep Blue Blueprint Integration 
+   Interaction: Desktop Hover Raycasting, Drag to Orbit, Particle Repulsion
+═══════════════════════════════════════════════════════════ */
+
+// ── CORE SETUP ──────────────────────────────────────────
+const canvas = document.getElementById('three-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0xffffff, 0.012);
+
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 500);
+camera.position.set(0, 14, 52);
+camera.lookAt(0, 0, 0);
+
+// ── STATE ────────────────────────────────────────────────
+const state = {
+  scroll: 0,
+  section: 'contact-hero',
+  sectionProgress: 0,
+  mouse: new THREE.Vector2(0, 0),
+  targetMouse: new THREE.Vector2(0, 0),
+  dragOffset: { x: 0, y: 0 },
+  isDragging: false,
+  time: 0,
+  fps: 60,
+  lastTime: 0,
+  frameCount: 0,
+  visible: true,
+  cameraBase: new THREE.Vector3(0, 14, 52),
+  cameraTarget: new THREE.Vector3(0, 14, 52),
+};
+
+const raycaster = new THREE.Raycaster();
+
+// ── MINIMAL THEME PALETTE (DEEP BLUE & NAVY) ──────────
+const C = {
+  ground: new THREE.Color(0xffffff),
+  cyan:   new THREE.Color(0x002244),
+  navy:   new THREE.Color(0x001f3f)
+};
+
+// ── MATERIALS ─────────────────────────────────────────────
+const MAT = {
+  blueprint: new THREE.MeshBasicMaterial({
+    color: C.cyan, wireframe: true, transparent: true, opacity: 0.15
+  }),
+  blueprintGlow: new THREE.LineBasicMaterial({
+    color: C.cyan, transparent: true, opacity: 0.35
+  }),
+  assembly: new THREE.MeshLambertMaterial({
+    color: 0x003366, transparent: true, opacity: 0.7,
+    emissive: 0x001229, emissiveIntensity: 0.2
+  }),
+  solid: new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    emissive: C.cyan, emissiveIntensity: 0.05
+  }),
+  ground: new THREE.MeshLambertMaterial({ color: C.ground }),
+  gridLine: new THREE.LineBasicMaterial({
+    color: C.cyan, transparent: true, opacity: 0.08
+  }),
+  pipe: new THREE.MeshLambertMaterial({
+    color: 0xe0f4fc, emissive: 0x002244, emissiveIntensity: 0.1
+  }),
+};
+
+// ── LIGHTS ───────────────────────────────────────────────
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.55); 
+scene.add(ambientLight);
+
+const sunLight = new THREE.DirectionalLight(0xffffff, 0.65);
+sunLight.position.set(30, 60, 20);
+sunLight.castShadow = true;
+sunLight.shadow.mapSize.set(1024, 1024);
+sunLight.shadow.camera.near = 0.5;
+sunLight.shadow.camera.far = 200;
+sunLight.shadow.camera.left = -80;
+sunLight.shadow.camera.right = 80;
+sunLight.shadow.camera.top = 80;
+sunLight.shadow.camera.bottom = -80;
+sunLight.shadow.bias = -0.001;
+scene.add(sunLight);
+
+const cyanLight = new THREE.PointLight(0x002244, 1.0, 80);
+cyanLight.position.set(0, 20, 10);
+scene.add(cyanLight);
+
+const rimLight = new THREE.DirectionalLight(0x004d99, 0.5);
+rimLight.position.set(-30, 10, -20);
+scene.add(rimLight);
+
+// ── TERRAIN GRID ────────────────────────────────────────
+function buildGrid() {
+  const group = new THREE.Group();
+  const size = 120, step = 6;
+
+  const groundGeo = new THREE.PlaneGeometry(size, size);
+  const ground = new THREE.Mesh(groundGeo, MAT.ground);
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  group.add(ground);
+
+  for (let i = -size/2; i <= size/2; i += step) {
+    const hGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-size/2, 0.02, i),
+      new THREE.Vector3(size/2, 0.02, i)
+    ]);
+    const vGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(i, 0.02, -size/2),
+      new THREE.Vector3(i, 0.02, size/2)
+    ]);
+    group.add(new THREE.Line(hGeo, MAT.gridLine));
+    group.add(new THREE.Line(vGeo, MAT.gridLine));
+  }
+
+  const axisGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-size/2, 0.04, 0),
+    new THREE.Vector3(size/2, 0.04, 0)
+  ]);
+  const axisLine = new THREE.Line(axisGeo, new THREE.LineBasicMaterial({
+    color: C.navy, transparent: true, opacity: 0.15
+  }));
+  group.add(axisLine);
+
+  return group;
+}
+
+// ── BUILDING FACTORY ─────────────────────────────────────
+function createBuilding(w, h, d, x, z, layer = 1) {
+  const group = new THREE.Group();
+  group.userData = { layer, buildState: 0, x, z, isHovered: false };
+
+  const geo = new THREE.BoxGeometry(w, h, d);
+
+  const bp = new THREE.Mesh(geo, MAT.blueprint.clone());
+  bp.userData.type = 'blueprint';
+  bp.visible = true;
+
+  const asm = new THREE.Mesh(geo, MAT.assembly.clone());
+  asm.userData.type = 'assembly';
+  asm.visible = false;
+
+  const solid = new THREE.Mesh(geo, MAT.solid.clone());
+  solid.userData.type = 'solid';
+  solid.castShadow = true;
+  solid.receiveShadow = true;
+  solid.visible = false;
+
+  group.add(bp, asm, solid);
+  group.position.set(x, h / 2, z);
+
+  return group;
+}
+
+// ── STRUCTURAL FRAME ─────────────────────────────────────
+function createFrame(w, h, d, x, z) {
+  const group = new THREE.Group();
+  group.userData = { layer: 2, buildState: 0 };
+
+  const cols = [];
+  const positions = [[-w/2,0,-d/2],[w/2,0,-d/2],[-w/2,0,d/2],[w/2,0,d/2]];
+
+  positions.forEach(([cx,cy,cz]) => {
+    const colGeo = new THREE.CylinderGeometry(0.18, 0.18, h, 6);
+    const col = new THREE.Mesh(colGeo, MAT.blueprint.clone());
+    col.position.set(cx, h/2, cz);
+    col.castShadow = true;
+    group.add(col);
+    cols.push(col);
+  });
+
+  const beamPairs = [
+    [positions[0], positions[1]],
+    [positions[2], positions[3]],
+    [positions[0], positions[2]],
+    [positions[1], positions[3]],
+  ];
+
+  [0, h/2, h].forEach(y => {
+    beamPairs.forEach(([a, b]) => {
+      const pts = [
+        new THREE.Vector3(a[0], y, a[2]),
+        new THREE.Vector3(b[0], y, b[2])
+      ];
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const beam = new THREE.Line(geo, MAT.blueprintGlow.clone());
+      group.add(beam);
+    });
+  });
+
+  group.position.set(x, 0, z);
+  return group;
+}
+
+// ── SILO / CHIMNEY ───────────────────────────────────────
+function createSilo(r, h, x, z) {
+  const group = new THREE.Group();
+  group.userData = { layer: 1, buildState: 0, isHovered: false };
+
+  const geo = new THREE.CylinderGeometry(r, r * 1.1, h, 12);
+  const bp = new THREE.Mesh(geo, MAT.blueprint.clone());
+  const solid = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({
+    color: 0xffffff, emissive: C.cyan, emissiveIntensity: 0.05
+  }));
+  solid.visible = false;
+  solid.castShadow = true;
+
+  group.add(bp, solid);
+  group.position.set(x, h/2, z);
+  return group;
+}
+
+// ── UNDERGROUND PIPES (Layer 0) ──────────────────────────
+function buildUnderground() {
+  const group = new THREE.Group();
+  const pipeColor = new THREE.MeshLambertMaterial({
+    color: 0x90e0ef, emissive: 0x0077b6, emissiveIntensity: 0.1,
+    transparent: true, opacity: 0.85
+  });
+
+  [[-8, -5, 0.3], [0, -5, 0.25], [8, -5, 0.2]].forEach(([x, y, r]) => {
+    const geo = new THREE.CylinderGeometry(r, r, 80, 8);
+    const pipe = new THREE.Mesh(geo, pipeColor);
+    pipe.rotation.z = Math.PI / 2;
+    pipe.position.set(0, y, x);
+    group.add(pipe);
+  });
+
+  for (let z = -30; z <= 30; z += 10) {
+    const geo = new THREE.CylinderGeometry(0.15, 0.15, 22, 6);
+    const pipe = new THREE.Mesh(geo, pipeColor.clone());
+    pipe.rotation.x = Math.PI / 2;
+    pipe.position.set(0, -4.5, z);
+    group.add(pipe);
+  }
+
+  group.userData = { layer: 0 };
+  return group;
+}
+
+// ── PARTICLE SYSTEM (Interactive Deep Blue Dust) ───────────
+class ParticleSystem {
+  constructor() {
+    this.count = 250;
+    this.geo = new THREE.BufferGeometry();
+    this.positions = new Float32Array(this.count * 3);
+    this.velocities = new Float32Array(this.count * 3);
+    this.ages = new Float32Array(this.count);
+    this.maxAges = new Float32Array(this.count);
+
+    for (let i = 0; i < this.count; i++) this.spawn(i);
+
+    this.geo.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+    this.mat = new THREE.PointsMaterial({
+      color: 0x002244,
+      size: 0.3,
+      transparent: true, opacity: 0.6, 
+      sizeAttenuation: true,
+      blending: THREE.NormalBlending,
+      depthWrite: false
+    });
+    this.points = new THREE.Points(this.geo, this.mat);
+  }
+
+  spawn(i) {
+    const spread = 40;
+    this.positions[i*3]   = (Math.random() - .5) * spread;
+    this.positions[i*3+1] = Math.random() * 2;
+    this.positions[i*3+2] = (Math.random() - .5) * spread;
+    this.velocities[i*3]   = (Math.random() - .5) * 0.02;
+    this.velocities[i*3+1] = Math.random() * 0.04 + 0.01;
+    this.velocities[i*3+2] = (Math.random() - .5) * 0.02;
+    this.ages[i] = 0;
+    this.maxAges[i] = 80 + Math.random() * 120;
+  }
+
+  update(intensity = 1.0, mouseX, mouseY) {
+    let worldMouseX = mouseX * 30;
+    let worldMouseY = -mouseY * 30; 
+    
+    for (let i = 0; i < this.count; i++) {
+      this.ages[i]++;
+      if (this.ages[i] > this.maxAges[i]) { this.spawn(i); continue; }
+      
+      this.positions[i*3]   += this.velocities[i*3];
+      this.positions[i*3+1] += this.velocities[i*3+1];
+      this.positions[i*3+2] += this.velocities[i*3+2];
+      this.velocities[i*3+1] -= 0.0004;
+      
+      let dx = this.positions[i*3] - worldMouseX;
+      let dy = this.positions[i*3+1] - worldMouseY; 
+      let distSq = dx*dx + dy*dy;
+      
+      if (distSq < 150) {
+          this.velocities[i*3] += dx * 0.0008;
+          this.velocities[i*3+1] += dy * 0.0008; 
+          this.velocities[i*3+2] += dy * 0.0008; 
+      }
+      
+      this.velocities[i*3] *= 0.98;
+      this.velocities[i*3+2] *= 0.98;
+    }
+    this.geo.attributes.position.needsUpdate = true;
+    this.mat.opacity = 0.6 * intensity; 
+  }
+}
+
+// ── SCENE CONSTRUCTION ───────────────────────────────────
+const sceneGroups = {
+  terrain: buildGrid(),
+  underground: buildUnderground(),
+  buildings: new THREE.Group(),
+  frames: new THREE.Group(),
+  silos: new THREE.Group(),
+  particles: new ParticleSystem(),
+};
+
+scene.add(sceneGroups.terrain);
+scene.add(sceneGroups.underground);
+sceneGroups.underground.position.y = -4;
+
+const buildingDefs = [
+  [12, 8, 10, -20, -15, 1], [8, 12, 8, 0, -18, 1],
+  [14, 6, 12, 22, -12, 1], [10, 16, 8, -28, 5, 1],
+  [6, 10, 6, 16, 10, 2],   [20, 5, 14, 5, 8, 1],
+  [8, 6, 8, -10, 20, 2],   [12, 8, 10, 28, 18, 2],
+];
+buildingDefs.forEach(([w, h, d, x, z, layer]) => {
+  const b = createBuilding(w, h, d, x, z, layer);
+  sceneGroups.buildings.add(b);
+});
+scene.add(sceneGroups.buildings);
+
+const frameDefs = [
+  [8, 14, 6, -14, 5], [10, 18, 8, 10, -5], [6, 12, 5, 28, -5]
+];
+frameDefs.forEach(([w, h, d, x, z]) => {
+  sceneGroups.frames.add(createFrame(w, h, d, x, z));
+});
+scene.add(sceneGroups.frames);
+
+[[1.8, 22, -22, 10], [2.5, 18, 30, 5], [1.2, 15, -5, -28]].forEach(([r, h, x, z]) => {
+  sceneGroups.silos.add(createSilo(r, h, x, z));
+});
+scene.add(sceneGroups.silos);
+
+scene.add(sceneGroups.particles.points);
+
+// ── SECTION → SCENE STATE MAP (Adapted for Contact Page) ─
+const SECTION_STATES = {
+  'contact-hero': { camPos: [0, 14, 52],    camLook: [0, 2, 0],   buildState: 0.1,  lightIntensity: 0.7,  label: 'Connection Established' },
+  'why-us':       { camPos: [-20, 15, 30],  camLook: [5, 0, -5],  buildState: 0.8,  lightIntensity: 0.9,  label: 'Strategic Advantage' },
+  'enquiry':      { camPos: [15, 8, 40],    camLook: [-10, 5, -10], buildState: 1.0,  lightIntensity: 1.0,  label: 'Transmission Ready' },
+};
+
+// ── BUILD STATE APPLIER (With Hover Logic) ───────────────
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function applyBuildState(group, progress) {
+  group.children.forEach(obj => {
+    if (!obj.userData?.buildState !== undefined) return;
+
+    if (obj.userData?.layer !== undefined) {
+      const layer = obj.userData.layer;
+      const layerOffset = layer === 0 ? 0 : layer === 2 ? 0.2 : 0.1;
+      const localProg = Math.max(0, Math.min(1, (progress - layerOffset) / 0.8));
+
+      obj.scale.y = 0.05 + localProg * 0.95;
+      
+      const targetScaleXZ = obj.userData.isHovered ? 1.05 : 1.0;
+      if(obj.scale.x === undefined) obj.scale.x = 1;
+      obj.scale.x = lerp(obj.scale.x, targetScaleXZ, 0.1);
+      obj.scale.z = obj.scale.x;
+
+      obj.children.forEach(mesh => {
+        if (!mesh.userData?.type) return;
+        const t = mesh.userData.type;
+        if (t === 'blueprint') {
+          mesh.visible = localProg < 0.5;
+          if (mesh.material) mesh.material.opacity = (0.5 - localProg) * 0.35; 
+        } else if (t === 'assembly') {
+          mesh.visible = localProg >= 0.3 && localProg < 0.85;
+          if (mesh.material) mesh.material.opacity = Math.sin(localProg * Math.PI) * 0.85;
+        } else if (t === 'solid') {
+          mesh.visible = localProg >= 0.7;
+          if (mesh.material) {
+             mesh.material.opacity = Math.min(1, (localProg - 0.7) / 0.3);
+             mesh.material.emissiveIntensity = obj.userData.isHovered ? 0.3 : 0.05;
+          }
+        }
+      });
+    }
+
+    if (obj.type === 'Group' && obj.children.length === 2) {
+      const localProg = Math.max(0, Math.min(1, progress));
+      obj.scale.y = 0.02 + localProg * 0.98;
+      
+      const targetScaleXZ = obj.userData.isHovered ? 1.05 : 1.0;
+      obj.scale.x = lerp(obj.scale.x, targetScaleXZ, 0.1);
+      obj.scale.z = obj.scale.x;
+      
+      const [bp, solid] = obj.children;
+      if (bp?.material) { bp.material.opacity = (1 - localProg) * 0.25; bp.visible = localProg < 0.8; }
+      if (solid) { 
+          solid.visible = localProg > 0.6; 
+          solid.material.emissiveIntensity = obj.userData.isHovered ? 0.3 : 0.05;
+      }
+    }
+  });
+}
+
+function applyFrameState(progress) {
+  sceneGroups.frames.children.forEach((frame, fi) => {
+    const offset = fi * 0.1;
+    const lp = Math.max(0, Math.min(1, (progress - offset) / 0.7));
+    frame.children.forEach(child => {
+      if (child.material) {
+        if (child instanceof THREE.Line) {
+          child.material.opacity = 0.1 + lp * 0.25;
+        } else {
+          child.material.opacity = 0.1 + lp * 0.2;
+          child.material.emissiveIntensity = lp * 0.1;
+        }
+      }
+    });
+    frame.scale.y = Math.max(0.02, lp);
+  });
+}
+
+// ── INTERACTION HANDLERS (Drag / Swipe / Hover) ───────────
+let previousMousePosition = { x: 0, y: 0 };
+
+function handleMove(clientX, clientY) {
+  state.targetMouse.x = (clientX / window.innerWidth  - 0.5) * 2;
+  state.targetMouse.y = (clientY / window.innerHeight - 0.5) * 2;
+}
+
+window.addEventListener('mousedown', (e) => {
+    state.isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+window.addEventListener('mouseup', () => state.isDragging = false);
+window.addEventListener('mousemove', (e) => {
+    handleMove(e.clientX, e.clientY);
+    if (state.isDragging) {
+        const deltaX = e.clientX - previousMousePosition.x;
+        state.dragOffset.x -= deltaX * 0.005; 
+    }
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+window.addEventListener('touchstart', (e) => {
+    state.isDragging = true;
+    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+}, {passive: true});
+window.addEventListener('touchend', () => state.isDragging = false);
+window.addEventListener('touchmove', (e) => {
+    handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    if (state.isDragging) {
+        const deltaX = e.touches[0].clientX - previousMousePosition.x;
+        state.dragOffset.x -= deltaX * 0.008; 
+    }
+    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+}, {passive: true});
+
+// ── SCROLL DETECTION ─────────────────────────────────────
+function getCurrentSection() {
+  const sections = document.querySelectorAll('[data-scene]');
+  let current = 'contact-hero';
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.55) {
+      current = sec.dataset.scene;
+    }
+  });
+  return current;
+}
+
+function onScroll() {
+  const total = document.body.scrollHeight - window.innerHeight;
+  state.scroll = Math.max(0, Math.min(1, window.scrollY / total));
+  state.section = getCurrentSection();
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+document.addEventListener('visibilitychange', () => {
+  state.visible = !document.hidden;
+});
+
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// ── NAV ACTIVE + DOTS ────────────────────────────────────
+const siDots = document.querySelectorAll('.si-dot');
+
+function updateNavAndDots() {
+  const sec = state.section;
+  siDots.forEach((dot) => {
+    dot.classList.toggle('active', dot.dataset.target === `sec-${sec}`);
+  });
+}
+
+siDots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    document.getElementById(dot.dataset.target)?.scrollIntoView({ behavior:'smooth' });
+  });
+});
+
+const currentCamPos  = new THREE.Vector3().copy(SECTION_STATES['contact-hero'].camPos);
+const currentCamLook = new THREE.Vector3().copy(SECTION_STATES['contact-hero'].camLook);
+const camMouseOffset = new THREE.Vector3();
+
+const perfEl = document.getElementById('perf');
+const stateEl = document.getElementById('stateLabel');
+let fpsAccum = 0, fpsFrames = 0;
+
+// ── MAIN RENDER LOOP ─────────────────────────────────────
+function animate(now = 0) {
+  requestAnimationFrame(animate);
+  if (!state.visible) return;
+
+  const dt = Math.min((now - state.lastTime) / 1000, 0.05);
+  state.lastTime = now;
+  state.time += dt;
+
+  fpsFrames++;
+  fpsAccum += dt;
+  if (fpsAccum >= 1) {
+    state.fps = Math.round(fpsFrames / fpsAccum);
+    perfEl.textContent = `FPS: ${state.fps}`;
+    fpsFrames = 0; fpsAccum = 0;
+  }
+
+  state.mouse.x = lerp(state.mouse.x, state.targetMouse.x, 0.08);
+  state.mouse.y = lerp(state.mouse.y, state.targetMouse.y, 0.08);
+
+  const sec = state.section;
+  const ss = SECTION_STATES[sec] || SECTION_STATES['contact-hero'];
+
+  const targetPos  = new THREE.Vector3().fromArray(ss.camPos);
+  const targetLook = new THREE.Vector3().fromArray(ss.camLook);
+
+  currentCamPos.lerp(targetPos, 0.025);
+  currentCamLook.lerp(targetLook, 0.025);
+
+  camMouseOffset.set(
+    state.mouse.x * 4.0,
+    -state.mouse.y * 2.5,
+    0
+  );
+
+  camera.position.copy(currentCamPos).add(camMouseOffset);
+  camera.lookAt(currentCamLook);
+  
+  // ── RAYCASTING (HOVER EFFECT) ──
+  raycaster.setFromCamera(state.mouse, camera);
+  
+  sceneGroups.buildings.children.forEach(b => b.userData.isHovered = false);
+  sceneGroups.silos.children.forEach(s => s.userData.isHovered = false);
+  
+  const intersects = raycaster.intersectObjects([...sceneGroups.buildings.children, ...sceneGroups.silos.children], true);
+  if (intersects.length > 0) {
+      let obj = intersects[0].object;
+      while(obj.parent && obj.parent !== sceneGroups.buildings && obj.parent !== sceneGroups.silos) {
+          obj = obj.parent;
+      }
+      if (obj.userData !== undefined) obj.userData.isHovered = true;
+  }
+
+  const buildProg = ss.buildState;
+
+  applyBuildState(sceneGroups.buildings, buildProg);
+  applyBuildState(sceneGroups.silos, buildProg);
+  applyFrameState(buildProg);
+
+  sunLight.intensity = lerp(sunLight.intensity, ss.lightIntensity, 0.02);
+
+  sceneGroups.underground.position.y = lerp(
+    sceneGroups.underground.position.y,
+    buildProg < 0.15 ? 0 : -4,
+    0.04
+  );
+  sceneGroups.underground.children.forEach(p => {
+    if (p.material) p.material.opacity = lerp(p.material.opacity, buildProg < 0.15 ? 0.85 : 0, 0.03);
+  });
+
+  const particleIntensity = Math.max(0, 1 - Math.abs(buildProg - 0.5) * 3);
+  sceneGroups.particles.update(particleIntensity, state.mouse.x, state.mouse.y);
+
+  sceneGroups.terrain.children.forEach(child => {
+    if (child instanceof THREE.Line) {
+      const mat = child.material;
+      if (mat && mat !== MAT.gridLine) {
+        mat.opacity = 0.08 + Math.sin(state.time * 0.5) * 0.06;
+      }
+    }
+  });
+
+  if (!state.isDragging) {
+      state.dragOffset.x = lerp(state.dragOffset.x, 0, 0.02);
+  }
+
+  let targetRotationY = (state.mouse.x * 0.05) + state.dragOffset.x;
+  
+  sceneGroups.buildings.rotation.y = lerp(
+    sceneGroups.buildings.rotation.y,
+    targetRotationY,
+    0.08
+  );
+  sceneGroups.frames.rotation.y = sceneGroups.buildings.rotation.y;
+  sceneGroups.silos.rotation.y  = sceneGroups.buildings.rotation.y;
+
+  stateEl.textContent = ss.label;
+  updateNavAndDots();
+
+  renderer.render(scene, camera);
+}
+
+animate();
+</script>
+</body>
+</html>
