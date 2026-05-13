@@ -312,10 +312,11 @@ footer {
     </div>
   </a>
   <div class="nav-links">
+    <!-- FIX: UPDATED LINKS HERE -->
     <a href="index.html" data-nav>Home</a>
-    <a href="#" data-nav>About</a>
+    <a href="about.html" data-nav>About</a>
     <a href="services.html" class="active" data-nav>Services</a>
-    <a href="#" data-nav>Contact</a>
+    <a href="contact.html" data-nav>Contact</a>
   </div>
 </nav>
 
@@ -342,7 +343,6 @@ footer {
           </div>
           <p class="svc-desc">Master layout planning, precise CAD documentation, and regulatory compliance mapping designed explicitly for industrial scale facilities and admin complexes.</p>
           <div class="svc-image">
-            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
             <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800" alt="Architectural Layout">
           </div>
           <div class="svc-arrow">↗</div>
@@ -357,7 +357,6 @@ footer {
           </div>
           <p class="svc-desc">Engineered foundations, load-bearing frames, and heavy slabs designed for maximum dynamic durability and strict IS code adherence.</p>
           <div class="svc-image">
-            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
             <img src="https://images.unsplash.com/photo-1541888081696-6e3e1fffa280?auto=format&fit=crop&q=80&w=800" alt="RCC Works">
           </div>
           <div class="svc-arrow">↗</div>
@@ -372,7 +371,6 @@ footer {
           </div>
           <p class="svc-desc">Advanced vibration isolation and dynamic load analysis engineered for turbines, compressors, and high-impact industrial presses.</p>
           <div class="svc-image">
-            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
             <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Heavy Machinery">
           </div>
           <div class="svc-arrow">↗</div>
@@ -387,7 +385,6 @@ footer {
           </div>
           <p class="svc-desc">Comprehensive internal routing including heavy-duty transportation roads, storm drainage networks, and integrated utility corridors.</p>
           <div class="svc-image">
-            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
             <img src="https://images.unsplash.com/photo-1590483866299-1589d83769c0?auto=format&fit=crop&q=80&w=800" alt="Industrial Roads & Drainage">
           </div>
           <div class="svc-arrow">↗</div>
@@ -402,7 +399,6 @@ footer {
           </div>
           <p class="svc-desc">Large-span pre-engineered sheds, bulk storage silos, and emission management chimneys constructed for operational resilience.</p>
           <div class="svc-image">
-            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
             <img src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=800" alt="Industrial Silos">
           </div>
           <div class="svc-arrow">↗</div>
@@ -417,7 +413,6 @@ footer {
           </div>
           <p class="svc-desc">Techno-commercial tendering, precision vendor selection, and end-to-end site supervision to ensure uncompromised execution.</p>
           <div class="svc-image">
-            <!-- REPLACE THIS SRC WITH YOUR INDIAMART IMAGE URL/FILE -->
             <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800" alt="Project Management">
           </div>
           <div class="svc-arrow">↗</div>
@@ -449,10 +444,11 @@ footer {
     <div class="ft-meta">Hyderabad, Telangana · GST: 36**********1ZZ · Reg. Oct 2024</div>
   </div>
   <div class="ft-links">
+    <!-- FIX: UPDATED LINKS HERE -->
     <a href="index.html">Home</a>
-    <a href="#">About</a>
+    <a href="about.html">About</a>
     <a href="services.html">Services</a>
-    <a href="#">Contact</a>
+    <a href="contact.html">Contact</a>
   </div>
   <div class="ft-copy">© 2024 Sai Meghana Technical Consultants LLP. All rights reserved.</div>
 </footer>
@@ -760,7 +756,7 @@ function animate(now = 0) {
   const camZ = baseCamPos.z - (state.scroll * 10);
   
   camera.position.set(camX, baseCamPos.y, camZ);
-  camera.position.x += state.mouse.x * 4.0; 
+  camera.position.x += state.mouse.x * 4.0;
   camera.position.y += -state.mouse.y * 2.5;
   camera.lookAt(baseCamLook);
 
