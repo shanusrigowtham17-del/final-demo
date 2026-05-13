@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>About Us | Sai Meghna Technical Consultants LLP</title>
-<meta name="description" content="Building Infrastructure with Precision & Trust.">
+<title>About Us | Sai Meghana Technical Consultants LLP</title>
+<meta name="description" content="Building Infrastructure with Precision, Compliance & Trust.">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,9 @@
         colors: {
           navy: '#001229',
           midnight: '#002244',
-          cyan: { 400: '#00adef', 500: '#008bbf' }
+          cyan: { 400: '#00adef', 500: '#008bbf' },
+          glass: 'rgba(255, 255, 255, 0.03)',
+          glassBorder: 'rgba(255, 255, 255, 0.08)'
         },
         fontFamily: {
           sans: ['"DM Sans"', 'sans-serif'],
@@ -29,422 +31,543 @@
           mono: ['"JetBrains Mono"', 'monospace'],
         },
         backgroundImage: {
-          'blueprint': 'repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0, 173, 239, 0.05) 40px, rgba(0, 173, 239, 0.05) 41px), repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0, 173, 239, 0.05) 40px, rgba(0, 173, 239, 0.05) 41px)'
+          'radial-glow': 'radial-gradient(circle at center, var(--tw-gradient-stops))',
         }
       }
     }
   }
 </script>
 
-<!-- GSAP, ScrollTrigger, Lenis, SplitType, Three.js -->
+<!-- GSAP & Lenis -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-<script src="https://unpkg.com/split-type"></script>
+
+<!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
   :root {
-    --cyan-glow: 0 0 30px rgba(0, 173, 239, 0.3);
+    --cyan-glow: 0 0 20px rgba(0, 173, 239, 0.4);
   }
   
   body {
-    background-color: var(--midnight-blue);
+    background-color: #001229;
     color: #ffffff;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Lenis Scroll Base */
+  /* Lenis Smooth Scroll Setup */
   html.lenis { height: auto; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
   .lenis.lenis-stopped { overflow: hidden; }
 
-  /* Fixed WebGL Background */
+  /* WebGL Background Container */
   #webgl-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
   }
 
-  /* Content Overlay */
-  #main-content {
-    position: relative;
-    z-index: 10;
+  /* VFX Overlays */
+  .vfx-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    opacity: 0.3;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
-  /* Header & Logo Alignment */
-  .brand { display: flex; align-items: center; gap: 1.2rem; }
-  .logo-box {
-    width: 72px;
-    height: 72px;
-    border: 2px solid white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    background: rgba(0, 18, 41, 0.7);
-    backdrop-filter: blur(10px);
-    flex-shrink: 0;
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 173, 239, 0.03) 2px, rgba(0, 173, 239, 0.03) 4px);
   }
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 72px;
-  }
-  .brand-text h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: 0.12em; line-height: 1; margin-bottom: 6px; }
-  .brand-text p { font-size: 0.7rem; font-weight: 600; color: #00adef; letter-spacing: 0.15em; text-transform: uppercase; }
 
-  /* Premium Glassmorphism Shields */
-  .content-shield {
-    background: linear-gradient(135deg, rgba(0, 18, 41, 0.7) 0%, rgba(0, 34, 68, 0.5) 100%);
+  /* Glassmorphism Utilities */
+  .glass-panel {
+    background: rgba(0, 18, 41, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(0, 173, 239, 0.15);
-    border-radius: 8px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-  }
-
-  .service-card {
-    background: linear-gradient(135deg, rgba(0, 18, 41, 0.8) 0%, rgba(0, 34, 68, 0.6) 100%);
-    backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   
-  .service-card:hover {
-    border-color: rgba(0, 173, 239, 0.5);
-    background: linear-gradient(135deg, rgba(0, 18, 41, 0.9) 0%, rgba(0, 173, 239, 0.1) 100%);
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,173,239,0.05);
+  .glass-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,173,239,0.02) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .glass-card:hover {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(0,173,239,0.08) 100%);
+    border-color: rgba(0, 173, 239, 0.4);
+    box-shadow: var(--cyan-glow);
+    transform: translateY(-5px) scale(1.02);
   }
 
-  /* Text Effects */
-  .text-glow { text-shadow: 0 0 20px rgba(0, 173, 239, 0.4); }
-  .line { overflow: hidden; padding-bottom: 4px; }
-  .char { transform: translateY(110%); opacity: 0; display: inline-block; }
-
-  /* Animated Underline */
-  .hover-underline {
-    position: relative;
-    display: inline-block;
+  /* Glowing Text */
+  .text-glow {
+    text-shadow: 0 0 30px rgba(0, 173, 239, 0.6);
   }
-  .hover-underline::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: -2px;
-    left: 0;
-    background-color: #00adef;
-    transition: width 0.4s ease;
-  }
-  .hover-underline:hover::after { width: 100%; }
 
   /* Custom Scrollbar */
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: #001229; }
-  ::-webkit-scrollbar-thumb { background: rgba(0, 173, 239, 0.4); border-radius: 4px; }
-  
-  @media (max-width: 768px) {
-    .logo-box { width: 56px; height: 56px; }
-    .brand-text { height: 56px; }
-    .brand-text h1 { font-size: 1.2rem; }
-    .brand-text p { font-size: 0.55rem; }
+  ::-webkit-scrollbar-thumb { background: rgba(0, 173, 239, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0, 173, 239, 0.6); }
+
+  /* 3D Tilt Wrapper */
+  .tilt-wrapper { perspective: 1000px; }
+  .tilt-element { transform-style: preserve-3d; }
+
+  /* Floating Labels */
+  .floating-input {
+    border-color: rgba(255,255,255,0.2);
+    background-color: transparent;
+  }
+  .floating-input:focus {
+    border-color: #00adef;
+    outline: none;
+    box-shadow: 0 1px 0 0 #00adef;
+  }
+  .floating-label {
+    position: absolute;
+    color: rgba(255,255,255,0.5);
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left top;
+    pointer-events: none;
+  }
+  .floating-input:focus ~ .floating-label,
+  .floating-input:not(:placeholder-shown) ~ .floating-label {
+    transform: translateY(-1.2rem) scale(0.75);
+    color: #00adef;
   }
 </style>
 </head>
-<body>
+<body class="selection:bg-cyan-400 selection:text-navy">
 
-<!-- WebGL Background -->
+<!-- 3D Environment & VFX -->
 <canvas id="webgl-canvas"></canvas>
+<div class="vfx-overlay"></div>
+<div class="scanlines"></div>
 
-<!-- Scrollable Content -->
-<div id="main-content">
-  
-  <!-- Navigation -->
-  <nav class="fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-xl border-b border-white/5 transition-all duration-500" id="navbar">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
-      
-      <a href="index.html" class="brand group">
-        <div class="logo-box group-hover:border-cyan-400 transition-colors shadow-[0_0_15px_rgba(0,173,239,0.1)] group-hover:shadow-[0_0_25px_rgba(0,173,239,0.4)]">
-          <svg viewBox="0 0 200 130" fill="none" style="width: 80%; height: 80%;" class="transition-transform group-hover:scale-110 duration-500">
-            <g transform="translate(100, 5)">
-              <polygon points="0,0 22,25 0,16" fill="#ffffff" stroke="#002147" stroke-width="2"/>
-              <polygon points="0,0 -22,25 0,16" fill="#00adef" stroke="#002147" stroke-width="2"/>
-              <polygon points="0,11 44,48 0,33" fill="#ffffff" stroke="#002147" stroke-width="2"/>
-              <polygon points="0,11 -44,48 0,33" fill="#00adef" stroke="#002147" stroke-width="2"/>
-              <polygon points="0,22 66,71 0,50" fill="#ffffff" stroke="#002147" stroke-width="2"/>
-              <polygon points="0,22 -66,71 0,50" fill="#00adef" stroke="#002147" stroke-width="2"/>
-            </g>
-          </svg>
-        </div>
-        <div class="brand-text">
-          <h1>SAI MEGHNA</h1>
-          <p>TECHNICAL CONSULTANTS</p>
-        </div>
-      </a>
-      
-      <div class="hidden md:flex gap-10 font-sans text-xs font-bold tracking-[0.15em]">
-        <a href="index.html" class="text-white/50 hover:text-cyan-400 transition-colors">HOME</a>
-        <a href="services.html" class="text-white/50 hover:text-cyan-400 transition-colors">SERVICES</a>
-        <a href="expertise.html" class="text-white/50 hover:text-cyan-400 transition-colors">EXPERTISE</a>
-        <a href="about.html" class="text-cyan-400 border-b-2 border-cyan-400 pb-1">ABOUT</a>
-        <a href="contact.html" class="text-white/50 hover:text-cyan-400 transition-colors">CONTACT</a>
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 glass-panel border-b-0 border-white/10 transition-all duration-300" id="navbar">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-4 group">
+      <div class="w-[72px] h-[72px] border border-white/20 flex items-center justify-center rounded bg-navy/50 backdrop-blur-md group-hover:border-cyan-400 transition-colors shrink-0">
+        <svg viewBox="0 0 200 130" fill="none" class="w-3/4 h-3/4 transition-transform group-hover:scale-110 duration-500">
+          <g transform="translate(100, 5)">
+            <polygon points="0,0 22,25 0,16" fill="#ffffff" stroke="#002147" stroke-width="2"/>
+            <polygon points="0,0 -22,25 0,16" fill="#00adef" stroke="#002147" stroke-width="2"/>
+            <polygon points="0,11 44,48 0,33" fill="#ffffff" stroke="#002147" stroke-width="2"/>
+            <polygon points="0,11 -44,48 0,33" fill="#00adef" stroke="#002147" stroke-width="2"/>
+            <polygon points="0,22 66,71 0,50" fill="#ffffff" stroke="#002147" stroke-width="2"/>
+            <polygon points="0,22 -66,71 0,50" fill="#00adef" stroke="#002147" stroke-width="2"/>
+          </g>
+        </svg>
       </div>
+      <div class="flex flex-col justify-center h-[72px]">
+        <h1 class="font-sans text-[1.4rem] md:text-[1.6rem] font-bold tracking-[0.12em] text-white leading-none mb-[6px]">SAI MEGHANA</h1>
+        <p class="font-sans text-[0.65rem] md:text-[0.7rem] font-semibold tracking-[0.15em] text-cyan-400 uppercase">TECHNICAL CONSULTANTS</p>
+      </div>
+    </a>
+    
+    <div class="hidden md:flex gap-10 font-sans text-xs font-bold tracking-[0.15em]">
+      <a href="index.html" class="text-white/60 hover:text-white transition-colors relative group">HOME<span class="absolute -bottom-2 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full"></span></a>
+      <a href="services.html" class="text-white/60 hover:text-white transition-colors relative group">SERVICES<span class="absolute -bottom-2 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full"></span></a>
+      <a href="expertise.html" class="text-white/60 hover:text-white transition-colors relative group">EXPERTISE<span class="absolute -bottom-2 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full"></span></a>
+      <a href="about.html" class="text-cyan-400 relative">ABOUT<span class="absolute -bottom-2 left-0 w-full h-[2px] bg-cyan-400"></span></a>
     </div>
-  </nav>
+  </div>
+</nav>
+
+<main id="smooth-wrapper" class="relative z-10">
 
   <!-- 1. HERO SECTION -->
-  <section class="relative min-h-[90vh] flex items-center pt-32 pb-20">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-      <div class="content-shield p-8 md:p-16 max-w-4xl border-l-4 border-l-cyan-400">
+  <section class="relative h-screen flex items-center justify-center overflow-hidden" id="hero">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-midnight/50 to-navy z-0"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full z-10 pt-20">
+      <div class="flex flex-col items-center text-center">
         
-        <div class="fade-up opacity-0 font-mono text-xs text-cyan-400 tracking-[0.2em] uppercase mb-6 flex items-center gap-3">
-          <div class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
-          Corporate Intelligence
+        <div class="gsap-hero-up inline-flex items-center gap-4 px-4 py-2 border border-cyan-400/30 rounded-full bg-cyan-400/5 backdrop-blur-md mb-8">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase">Corporate Identity Profile</span>
         </div>
 
-        <h1 class="split-text font-serif text-5xl md:text-6xl lg:text-7xl font-light leading-[1.1] tracking-tight mb-8">
+        <h1 class="gsap-hero-up font-serif text-5xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.1] mb-6">
           Building Infrastructure with <br>
-          <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-400 text-glow">Precision & Trust</span>
+          <span class="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-400 text-glow">Precision & Trust</span>
         </h1>
-
-        <p class="fade-up opacity-0 font-sans text-lg md:text-xl font-light text-white/70 leading-relaxed max-w-2xl">
-          Sai Meghna Technical Consultants LLP is a Hyderabad-based consultancy specializing in civil infrastructure supervision, project consultancy, and architectural construction services.
+        
+        <p class="gsap-hero-up font-sans text-lg md:text-xl font-light text-white/60 max-w-3xl leading-relaxed mb-12">
+          Sai Meghana Technical Consultants LLP is a Hyderabad-based consultancy specializing in civil infrastructure supervision, project consultancy, and architectural construction services.
         </p>
-
+        
+        <div class="gsap-hero-up flex gap-6">
+          <a href="#enquiry" class="px-8 py-4 bg-cyan-400 text-navy font-bold tracking-widest text-xs uppercase hover:bg-white hover:text-navy transition-all duration-300 shadow-[0_0_20px_rgba(0,173,239,0.3)]">
+            Connect With Us
+          </a>
+        </div>
       </div>
+    </div>
+
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-60">
+      <span class="font-mono text-[0.6rem] tracking-[0.3em] uppercase rotate-90 mb-6">Scroll</span>
+      <div class="w-[1px] h-16 bg-gradient-to-b from-cyan-400 to-transparent"></div>
     </div>
   </section>
 
   <!-- 2. COMPANY OVERVIEW SECTION -->
-  <section class="py-24 relative z-10">
+  <section class="py-32 relative z-10 bg-navy border-t border-white/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
-      <div class="flex flex-col md:flex-row gap-12 items-start">
+      <div class="flex flex-col md:flex-row gap-16 items-start">
         
-        <div class="md:w-1/3">
-          <div class="w-full h-[1px] bg-gradient-to-r from-cyan-400 to-transparent mb-6 gsap-line origin-left"></div>
-          <h2 class="font-serif text-3xl md:text-4xl font-light text-white mb-4">Our Vision</h2>
-          <p class="font-mono text-xs text-cyan-400 tracking-widest uppercase">The Foundation of Excellence</p>
+        <div class="md:w-1/3 fade-up opacity-0">
+          <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block">Our Story</span>
+          <h2 class="font-serif text-4xl md:text-5xl font-light leading-tight">Vision & <br><span class="italic text-cyan-400">Execution</span></h2>
+          <div class="w-16 h-[1px] bg-cyan-400 mt-8"></div>
         </div>
-        
-        <div class="md:w-2/3">
-          <p class="fade-up opacity-0 font-sans text-xl md:text-2xl font-light text-white/80 leading-relaxed">
-            "Sai Meghna Technical Consultants LLP is a Hyderabad-based consultancy firm specializing in civil & infrastructure supervision, project consultancy, and architectural construction services. Established with a vision to deliver end-to-end solutions, we combine technical expertise, compliance clarity, and innovative design to support industrial and commercial growth."
-          </p>
+
+        <div class="md:w-2/3 fade-up opacity-0 delay-100">
+          <div class="glass-panel p-8 md:p-12 rounded-xl border border-white/5 shadow-2xl">
+            <p class="font-sans text-xl md:text-2xl font-light text-white/80 leading-relaxed">
+              Sai Meghana Technical Consultants LLP is a Hyderabad-based consultancy firm specializing in civil & infrastructure supervision, project consultancy, and architectural construction services. 
+              <br><br>
+              Established with a vision to deliver end-to-end solutions, the firm combines technical expertise, compliance clarity, and innovative design to support industrial and commercial growth.
+            </p>
+          </div>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- 3. WHAT WE DO SECTION -->
-  <section class="py-24 relative z-10">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+  <!-- 3. WHY CHOOSE US -->
+  <section id="why-choose-us" class="py-32 relative z-10 bg-midnight">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-400/5 via-transparent to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
       
-      <div class="mb-16 text-center">
-        <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block fade-up opacity-0">Operational Domains</span>
-        <h2 class="split-text font-serif text-4xl md:text-5xl font-light text-white">What We <span class="italic text-cyan-400 text-glow">Do</span></h2>
+      <div class="text-center mb-20 fade-up opacity-0">
+        <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block">Corporate Trust</span>
+        <h2 class="font-serif text-4xl md:text-5xl font-light">Why Clients <span class="italic text-cyan-400 text-glow">Trust Us</span></h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <!-- Card 1 -->
-        <div class="service-card p-10 flex flex-col fade-up opacity-0">
-          <div class="w-12 h-12 mb-8 text-cyan-400 flex-shrink-0">
-            <!-- Supervision Icon -->
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.965 11.965 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        <div class="gsap-card tilt-wrapper h-full">
+          <div class="tilt-element glass-card p-10 h-full flex flex-col relative overflow-hidden group">
+            <div class="w-10 h-10 mb-6 text-cyan-400">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full stroke-[1.5]"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            </div>
+            <h3 class="font-serif text-xl mb-3 text-white">End-to-End Execution</h3>
+            <p class="text-white/60 font-light text-sm leading-relaxed flex-grow">From feasibility studies and DPR preparation to supervision and execution, we provide complete project lifecycle support.</p>
           </div>
-          <h3 class="font-serif text-2xl mb-4 text-white">Civil & Infrastructure Supervision</h3>
-          <p class="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">
-            Rigorous site oversight ensuring every millimeter of construction adheres strictly to structural blueprints, safety protocols, and IS code compliance.
-          </p>
-          <div class="w-8 h-[1px] bg-cyan-400 mt-auto transition-all duration-300 group-hover:w-full"></div>
         </div>
 
         <!-- Card 2 -->
-        <div class="service-card p-10 flex flex-col fade-up opacity-0 delay-100">
-          <div class="w-12 h-12 mb-8 text-cyan-400 flex-shrink-0">
-            <!-- Consultancy Icon -->
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <div class="gsap-card tilt-wrapper h-full">
+          <div class="tilt-element glass-card p-10 h-full flex flex-col relative overflow-hidden group">
+            <div class="w-10 h-10 mb-6 text-cyan-400">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full stroke-[1.5]"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.965 11.965 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <h3 class="font-serif text-xl mb-3 text-white">Compliance & Regulatory</h3>
+            <p class="text-white/60 font-light text-sm leading-relaxed flex-grow">Deep understanding of approvals, documentation, industrial regulations, and compliance procedures ensures smooth execution.</p>
           </div>
-          <h3 class="font-serif text-2xl mb-4 text-white">Project Consultancy & DPR Services</h3>
-          <p class="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">
-            Comprehensive Detailed Project Reports, financial feasibility analysis, and strategic vendor management to secure and optimize industrial execution.
-          </p>
-          <div class="w-8 h-[1px] bg-cyan-400 mt-auto transition-all duration-300 group-hover:w-full"></div>
         </div>
 
         <!-- Card 3 -->
-        <div class="service-card p-10 flex flex-col fade-up opacity-0 delay-200">
-          <div class="w-12 h-12 mb-8 text-cyan-400 flex-shrink-0">
-            <!-- Architecture Icon -->
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+        <div class="gsap-card tilt-wrapper h-full">
+          <div class="tilt-element glass-card p-10 h-full flex flex-col relative overflow-hidden group">
+            <div class="w-10 h-10 mb-6 text-cyan-400">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full stroke-[1.5]"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+            </div>
+            <h3 class="font-serif text-xl mb-3 text-white">Precision Supervision</h3>
+            <p class="text-white/60 font-light text-sm leading-relaxed flex-grow">Focused on quality control, technical accuracy, safety standards, and execution accountability for infrastructure.</p>
           </div>
-          <h3 class="font-serif text-2xl mb-4 text-white">Architectural Construction & Planning</h3>
-          <p class="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">
-            Intelligent spatial orchestration combining modern industrial aesthetics with uncompromising structural functionality and capacity.
-          </p>
-          <div class="w-8 h-[1px] bg-cyan-400 mt-auto transition-all duration-300 group-hover:w-full"></div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="gsap-card tilt-wrapper h-full">
+          <div class="tilt-element glass-card p-10 h-full flex flex-col relative overflow-hidden group">
+            <div class="w-10 h-10 mb-6 text-cyan-400">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full stroke-[1.5]"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+            </div>
+            <h3 class="font-serif text-xl mb-3 text-white">Modern Architectural Planning</h3>
+            <p class="text-white/60 font-light text-sm leading-relaxed flex-grow">Design philosophy combining industrial efficiency, productivity optimization, safety, sustainability, and modern aesthetics.</p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="gsap-card tilt-wrapper h-full">
+          <div class="tilt-element glass-card p-10 h-full flex flex-col relative overflow-hidden group">
+            <div class="w-10 h-10 mb-6 text-cyan-400">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full stroke-[1.5]"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.965 11.965 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <h3 class="font-serif text-xl mb-3 text-white">Transparent Operations</h3>
+            <p class="text-white/60 font-light text-sm leading-relaxed flex-grow">Registered under RoC-Hyderabad (LLPIN: ACG-9049) and operating under LLP Act, 2008 with full transparency.</p>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="gsap-card tilt-wrapper h-full">
+          <div class="tilt-element glass-card p-10 h-full flex flex-col relative overflow-hidden group">
+            <div class="w-10 h-10 mb-6 text-cyan-400">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full stroke-[1.5]"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="font-serif text-xl mb-3 text-white">Client-Centric Consultancy</h3>
+            <p class="text-white/60 font-light text-sm leading-relaxed flex-grow">Acting not merely as consultants but as execution partners committed to long-term client success and reliable delivery.</p>
+          </div>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- 4. EXECUTION & COMMITMENT SECTION -->
-  <section class="py-24 relative z-10 border-y border-white/5 bg-navy/30 backdrop-blur-sm">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12">
-      <div class="flex flex-col lg:flex-row gap-16">
+  <!-- 4. SERVICES & WORKFLOW (Vertical Execution Line) -->
+  <section class="py-32 bg-navy relative border-y border-white/5">
+    <div class="max-w-4xl mx-auto px-6 lg:px-12 relative">
+      
+      <div class="text-center mb-24 fade-up opacity-0">
+        <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block">Service Matrix</span>
+        <h2 class="font-serif text-4xl md:text-5xl font-light">Consultancy <span class="italic text-cyan-400">Capabilities</span></h2>
+      </div>
+
+      <!-- The Line -->
+      <div class="absolute left-6 md:left-1/2 top-[250px] bottom-0 w-[1px] bg-white/10 -translate-x-1/2 z-0">
+        <div id="progress-line" class="w-full bg-cyan-400 shadow-[0_0_15px_#00adef] origin-top h-full scale-y-0"></div>
+      </div>
+
+      <!-- Steps -->
+      <div class="relative z-10 space-y-16">
         
-        <div class="lg:w-5/12 lg:sticky lg:top-32 h-fit">
-          <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block fade-up opacity-0">Our Methodology</span>
-          <h2 class="split-text font-serif text-4xl md:text-5xl font-light text-white mb-6">Execution & <br><span class="italic text-cyan-400">Commitment</span></h2>
-          <p class="font-sans text-white/60 text-base font-light leading-relaxed fade-up opacity-0">
-            We operate with authoritative technical competence, managing the entire lifecycle of industrial and commercial development from conception to handover.
-          </p>
+        <div class="workflow-step flex flex-col md:flex-row items-center gap-8 md:gap-16 opacity-0 translate-y-10 group">
+          <div class="md:w-1/2 md:text-right order-2 md:order-1 glass-card p-6 rounded-lg group-hover:border-cyan-400/50 transition-colors">
+            <h4 class="font-serif text-xl mb-2 text-white">Civil & Infrastructure Supervision</h4>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-midnight border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_20px_rgba(0,173,239,0.5)] order-1 md:order-2 z-10 shrink-0">
+            <div class="w-3 h-3 bg-cyan-400 rounded-full"></div>
+          </div>
+          <div class="md:w-1/2 order-3 hidden md:block"></div>
         </div>
 
-        <div class="lg:w-7/12 flex flex-col gap-6">
-          
-          <div class="group flex items-start gap-6 border-b border-white/10 pb-6 fade-up opacity-0">
-            <div class="font-mono text-cyan-400 text-sm mt-1">01</div>
-            <div>
-              <h4 class="font-sans text-xl text-white mb-2 hover-underline cursor-default">End-to-End Project Execution</h4>
-              <p class="font-sans text-sm text-white/50 leading-relaxed">Seamless orchestration of vendors, materials, and timelines to guarantee delivery without compromise.</p>
-            </div>
+        <div class="workflow-step flex flex-col md:flex-row items-center gap-8 md:gap-16 opacity-0 translate-y-10 group">
+          <div class="md:w-1/2 order-3 md:order-1 hidden md:block"></div>
+          <div class="w-12 h-12 rounded-full bg-midnight border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_20px_rgba(0,173,239,0.5)] order-1 md:order-2 z-10 shrink-0">
+            <div class="w-3 h-3 bg-cyan-400 rounded-full"></div>
           </div>
-
-          <div class="group flex items-start gap-6 border-b border-white/10 pb-6 fade-up opacity-0">
-            <div class="font-mono text-cyan-400 text-sm mt-1">02</div>
-            <div>
-              <h4 class="font-sans text-xl text-white mb-2 hover-underline cursor-default">Feasibility Studies</h4>
-              <p class="font-sans text-sm text-white/50 leading-relaxed">Deep-dive analytics into site viability, cost structures, and environmental impact before breaking ground.</p>
-            </div>
+          <div class="md:w-1/2 md:text-left order-2 md:order-3 glass-card p-6 rounded-lg group-hover:border-cyan-400/50 transition-colors">
+            <h4 class="font-serif text-xl mb-2 text-white">DPR & Feasibility Consultancy</h4>
           </div>
-
-          <div class="group flex items-start gap-6 border-b border-white/10 pb-6 fade-up opacity-0">
-            <div class="font-mono text-cyan-400 text-sm mt-1">03</div>
-            <div>
-              <h4 class="font-sans text-xl text-white mb-2 hover-underline cursor-default">DPR Preparation</h4>
-              <p class="font-sans text-sm text-white/50 leading-relaxed">Meticulous Detailed Project Reports that satisfy financial, regulatory, and engineering stakeholders.</p>
-            </div>
-          </div>
-
-          <div class="group flex items-start gap-6 border-b border-white/10 pb-6 fade-up opacity-0">
-            <div class="font-mono text-cyan-400 text-sm mt-1">04</div>
-            <div>
-              <h4 class="font-sans text-xl text-white mb-2 hover-underline cursor-default">Compliance & Regulatory Approvals</h4>
-              <p class="font-sans text-sm text-white/50 leading-relaxed">Navigating bureaucratic architecture to secure permissions swiftly and legally.</p>
-            </div>
-          </div>
-
-          <div class="group flex items-start gap-6 pb-6 fade-up opacity-0">
-            <div class="font-mono text-cyan-400 text-sm mt-1">05</div>
-            <div>
-              <h4 class="font-sans text-xl text-white mb-2 hover-underline cursor-default">Industrial Project Management</h4>
-              <p class="font-sans text-sm text-white/50 leading-relaxed">High-level telemetry over massive civil projects, mitigating risk and accelerating deployment.</p>
-            </div>
-          </div>
-
         </div>
+
+        <div class="workflow-step flex flex-col md:flex-row items-center gap-8 md:gap-16 opacity-0 translate-y-10 group">
+          <div class="md:w-1/2 md:text-right order-2 md:order-1 glass-card p-6 rounded-lg group-hover:border-cyan-400/50 transition-colors">
+            <h4 class="font-serif text-xl mb-2 text-white">Compliance & Approval Assistance</h4>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-midnight border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_20px_rgba(0,173,239,0.5)] order-1 md:order-2 z-10 shrink-0">
+            <div class="w-3 h-3 bg-cyan-400 rounded-full"></div>
+          </div>
+          <div class="md:w-1/2 order-3 hidden md:block"></div>
+        </div>
+
+        <div class="workflow-step flex flex-col md:flex-row items-center gap-8 md:gap-16 opacity-0 translate-y-10 group">
+          <div class="md:w-1/2 order-3 md:order-1 hidden md:block"></div>
+          <div class="w-12 h-12 rounded-full bg-midnight border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_20px_rgba(0,173,239,0.5)] order-1 md:order-2 z-10 shrink-0">
+            <div class="w-3 h-3 bg-cyan-400 rounded-full"></div>
+          </div>
+          <div class="md:w-1/2 md:text-left order-2 md:order-3 glass-card p-6 rounded-lg group-hover:border-cyan-400/50 transition-colors">
+            <h4 class="font-serif text-xl mb-2 text-white">Industrial Architectural Design</h4>
+          </div>
+        </div>
+
+        <div class="workflow-step flex flex-col md:flex-row items-center gap-8 md:gap-16 opacity-0 translate-y-10 group">
+          <div class="md:w-1/2 md:text-right order-2 md:order-1 glass-card p-6 rounded-lg group-hover:border-cyan-400/50 transition-colors">
+            <h4 class="font-serif text-xl mb-2 text-white">Project Planning & Execution</h4>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-midnight border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_20px_rgba(0,173,239,0.5)] order-1 md:order-2 z-10 shrink-0">
+            <div class="w-3 h-3 bg-cyan-400 rounded-full"></div>
+          </div>
+          <div class="md:w-1/2 order-3 hidden md:block"></div>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- 5. ARCHITECTURAL PHILOSOPHY -->
-  <section class="py-32 relative z-10 bg-blueprint">
-    <div class="absolute inset-0 bg-midnight/80 z-0"></div> <!-- Dimmer over the blueprint -->
-    
+  <section class="py-32 relative bg-midnight/90 border-b border-white/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 text-center">
-      <h2 class="split-text font-serif text-4xl md:text-5xl font-light text-white mb-16">Architectural <span class="italic text-cyan-400 text-glow">Philosophy</span></h2>
       
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+      <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block fade-up opacity-0">Design Thinking</span>
+      <h2 class="font-serif text-4xl md:text-5xl font-light text-white mb-16 fade-up opacity-0">Architectural <span class="italic text-cyan-400 text-glow">Philosophy</span></h2>
+      
+      <!-- Using Tabs Logic from earlier design for Philosophy -->
+      <div class="glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col md:flex-row min-h-[400px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] fade-up opacity-0">
         
-        <div class="fade-up opacity-0 bg-navy/60 backdrop-blur-md border border-white/10 rounded p-6 flex flex-col items-center justify-center hover:border-cyan-400/50 transition-colors">
-          <div class="w-2 h-2 bg-cyan-400 rounded-full mb-4"></div>
-          <span class="font-sans text-sm font-medium text-white tracking-wide">Functionality</span>
-        </div>
-        <div class="fade-up opacity-0 bg-navy/60 backdrop-blur-md border border-white/10 rounded p-6 flex flex-col items-center justify-center hover:border-cyan-400/50 transition-colors delay-75">
-          <div class="w-2 h-2 bg-cyan-400 rounded-full mb-4"></div>
-          <span class="font-sans text-sm font-medium text-white tracking-wide">Industrial Efficiency</span>
-        </div>
-        <div class="fade-up opacity-0 bg-navy/60 backdrop-blur-md border border-white/10 rounded p-6 flex flex-col items-center justify-center hover:border-cyan-400/50 transition-colors delay-150">
-          <div class="w-2 h-2 bg-cyan-400 rounded-full mb-4"></div>
-          <span class="font-sans text-sm font-medium text-white tracking-wide">Modern Aesthetics</span>
-        </div>
-        <div class="fade-up opacity-0 bg-navy/60 backdrop-blur-md border border-white/10 rounded p-6 flex flex-col items-center justify-center hover:border-cyan-400/50 transition-colors delay-200">
-          <div class="w-2 h-2 bg-cyan-400 rounded-full mb-4"></div>
-          <span class="font-sans text-sm font-medium text-white tracking-wide">Safety Standards</span>
-        </div>
-        <div class="fade-up opacity-0 bg-navy/60 backdrop-blur-md border border-white/10 rounded p-6 flex flex-col items-center justify-center hover:border-cyan-400/50 transition-colors delay-300 col-span-2 md:col-span-1">
-          <div class="w-2 h-2 bg-cyan-400 rounded-full mb-4"></div>
-          <span class="font-sans text-sm font-medium text-white tracking-wide">Sustainable Planning</span>
+        <div class="w-full md:w-1/3 bg-navy border-r border-white/10 p-6 flex flex-col gap-4">
+          <div class="font-mono text-xs text-white/40 tracking-widest mb-4">PHILOSOPHY PILLARS</div>
+          
+          <button class="tab-btn active text-left px-6 py-4 rounded bg-cyan-400/10 border border-cyan-400/30 text-white font-sans text-sm tracking-wider transition-all" data-target="tab-1">
+            01. Sustainable Thinking
+          </button>
+          <button class="tab-btn text-left px-6 py-4 rounded hover:bg-white/5 border border-transparent text-white/50 font-sans text-sm tracking-wider transition-all" data-target="tab-2">
+            02. Functional Planning
+          </button>
+          <button class="tab-btn text-left px-6 py-4 rounded hover:bg-white/5 border border-transparent text-white/50 font-sans text-sm tracking-wider transition-all" data-target="tab-3">
+            03. Structural Safety
+          </button>
         </div>
 
+        <div class="w-full md:w-2/3 p-10 md:p-16 relative bg-gradient-to-br from-midnight to-navy text-left flex items-center">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-400/5 rounded-full blur-[80px]"></div>
+          
+          <div id="tab-1" class="tab-content block">
+            <h3 class="font-serif text-3xl mb-6 text-white">Sustainable Infrastructure Thinking</h3>
+            <p class="text-white/60 font-light leading-relaxed">
+              We design with the future in mind. Our architectural planning integrates sustainable materials, energy-efficient spatial flows, and environmentally compliant structural methodologies to ensure long-term viability.
+            </p>
+          </div>
+
+          <div id="tab-2" class="tab-content hidden">
+            <h3 class="font-serif text-3xl mb-6 text-white">Functional Industrial Planning & Productivity</h3>
+            <p class="text-white/60 font-light leading-relaxed">
+              Aesthetics meet extreme functionality. We optimize industrial layouts to maximize workflow efficiency, equipment placement, and operational productivity without sacrificing modern architectural elegance.
+            </p>
+          </div>
+
+          <div id="tab-3" class="tab-content hidden">
+            <h3 class="font-serif text-3xl mb-6 text-white">Absolute Structural Safety & Future-Readiness</h3>
+            <p class="text-white/60 font-light leading-relaxed">
+              Safety is non-negotiable. Every column, beam, and machine foundation is over-engineered to withstand dynamic loads, ensuring the infrastructure remains robust and adaptable for future technological expansions.
+            </p>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </section>
 
-  <!-- 6. TRUST & LEGAL SECTION -->
-  <section class="py-24 relative z-10">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex justify-center">
+  <!-- 6. INTEGRATED ENQUIRY SECTION -->
+  <section class="py-32 relative bg-navy overflow-hidden" id="enquiry">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-cyan-400/10 via-transparent to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
       
-      <div class="content-shield w-full max-w-4xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
+      <div class="glass-panel p-10 md:p-16 rounded-2xl flex flex-col md:flex-row justify-between gap-16 border border-cyan-400/20 shadow-[0_0_50px_rgba(0,173,239,0.05)] fade-up opacity-0">
         
-        <div>
-          <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block">Corporate Transparency</span>
-          <h3 class="font-serif text-3xl md:text-4xl text-white mb-4">Integrity & Accountability</h3>
-          <p class="font-sans text-sm text-white/60 max-w-sm leading-relaxed">
-            Governed by the LLP Act of 2008, we maintain the highest echelon of financial and operational transparency for our clients.
+        <!-- Left: Text -->
+        <div class="md:w-5/12">
+          <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4 block">Project Initiation</span>
+          <h2 class="font-serif text-4xl md:text-5xl font-light mb-6">Initialize Your <br><span class="italic text-cyan-400">Infrastructure.</span></h2>
+          <p class="text-white/60 font-light leading-relaxed mb-10">
+            Partner with a firm that treats your project as a masterclass in engineering precision. Transmit your requirements directly to our executive hub.
           </p>
+          
+          <div class="flex flex-col gap-6 font-mono text-sm tracking-widest pt-6 border-t border-white/10">
+            <div class="text-white/40 text-xs">DIRECT COMMUNICATION CHANNELS</div>
+            <a href="mailto:smtcllp2024@gmail.com" class="hover:text-cyan-400 transition-colors flex items-center gap-4">
+              <span class="w-10 h-10 rounded border border-white/20 flex items-center justify-center bg-white/5">✉️</span> smtcllp2024@gmail.com
+            </a>
+            <div class="flex items-center gap-4 text-white/80">
+              <span class="w-10 h-10 rounded border border-white/20 flex items-center justify-center bg-white/5">🏢</span> RoC-Hyderabad // LLPIN: ACG-9049
+            </div>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-4 font-mono text-xs tracking-widest text-cyan-400 flex-shrink-0">
-          <div class="px-6 py-4 bg-navy/80 border border-cyan-400/20 rounded flex items-center justify-between gap-6">
-            <span class="text-white/50">REGISTRY</span>
-            <span>RoC-Hyderabad</span>
-          </div>
-          <div class="px-6 py-4 bg-navy/80 border border-cyan-400/20 rounded flex items-center justify-between gap-6">
-            <span class="text-white/50">LLPIN</span>
-            <span>ACG-9049</span>
-          </div>
+        <!-- Right: Elegant Form -->
+        <div class="md:w-7/12 w-full">
+          <form id="enquiry-form" class="flex flex-col gap-8 bg-midnight/50 p-8 rounded-xl border border-white/5 shadow-inner">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="relative z-0 w-full group">
+                <input type="text" id="floating_name" class="floating-input block py-2.5 px-0 w-full text-base text-white border-0 border-b-2 appearance-none" placeholder=" " required />
+                <label for="floating_name" class="floating-label absolute text-sm top-3 -z-10 origin-[0]">Full Name *</label>
+              </div>
+              <div class="relative z-0 w-full group">
+                <input type="text" id="floating_company" class="floating-input block py-2.5 px-0 w-full text-base text-white border-0 border-b-2 appearance-none" placeholder=" " required />
+                <label for="floating_company" class="floating-label absolute text-sm top-3 -z-10 origin-[0]">Company Name *</label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="relative z-0 w-full group">
+                <input type="email" id="floating_email" class="floating-input block py-2.5 px-0 w-full text-base text-white border-0 border-b-2 appearance-none" placeholder=" " required />
+                <label for="floating_email" class="floating-label absolute text-sm top-3 -z-10 origin-[0]">Email Address *</label>
+              </div>
+              <div class="relative z-0 w-full group">
+                <input type="tel" id="floating_phone" class="floating-input block py-2.5 px-0 w-full text-base text-white border-0 border-b-2 appearance-none" placeholder=" " required />
+                <label for="floating_phone" class="floating-label absolute text-sm top-3 -z-10 origin-[0]">Phone Number *</label>
+              </div>
+            </div>
+
+            <div class="relative z-0 w-full group">
+              <select id="floating_service" class="floating-input block py-2.5 px-0 w-full text-sm text-white border-0 border-b-2 appearance-none cursor-pointer" required>
+                <option value="" disabled selected hidden></option>
+                <option value="Civil Supervision" class="bg-navy text-white">Civil & Infrastructure Supervision</option>
+                <option value="Project Consultancy" class="bg-navy text-white">Project Consultancy & DPR</option>
+                <option value="Architectural Planning" class="bg-navy text-white">Architectural Planning</option>
+                <option value="Compliance" class="bg-navy text-white">Compliance & Approvals</option>
+                <option value="Other" class="bg-navy text-white">Other</option>
+              </select>
+              <label for="floating_service" class="floating-label absolute text-sm top-3 -z-10 origin-[0]">Service Required *</label>
+            </div>
+
+            <div class="relative z-0 w-full group">
+              <textarea id="floating_details" rows="3" class="floating-input block py-2.5 px-0 w-full text-base text-white border-0 border-b-2 appearance-none resize-none" placeholder=" " required></textarea>
+              <label for="floating_details" class="floating-label absolute text-sm top-3 -z-10 origin-[0]">Project Details / Technical Requirements *</label>
+            </div>
+
+            <button type="submit" class="w-full mt-4 py-4 border border-cyan-400 text-cyan-400 font-bold tracking-[0.2em] text-xs uppercase hover:bg-cyan-400 hover:text-navy hover:shadow-[0_0_20px_rgba(0,173,239,0.4)] transition-all duration-500 rounded">
+              Send Enquiry
+            </button>
+          </form>
         </div>
 
       </div>
-
     </div>
   </section>
 
-  <!-- 7. FINAL STATEMENT -->
-  <section class="py-32 relative z-10 overflow-hidden bg-gradient-to-t from-navy to-midnight">
-    <div class="max-w-5xl mx-auto px-6 lg:px-12 text-center">
-      <h2 class="split-text font-serif text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight">
-        Sai Meghna Technical Consultants LLP is your trusted partner for building <span class="italic text-cyan-400 text-glow">sustainable, compliant, and future-ready projects.</span>
+  <!-- 7. FINAL CLOSING SECTION -->
+  <section class="py-32 relative z-10 overflow-hidden bg-gradient-to-t from-midnight to-navy border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-12 text-center fade-up opacity-0">
+      <h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-12">
+        Sai Meghna Technical Consultants LLP is your trusted partner for building <span class="italic text-cyan-400 text-glow">sustainable, compliant, and future-ready industrial projects.</span>
       </h2>
+      <div class="flex justify-center gap-6">
+        <a href="#enquiry" class="px-8 py-3 bg-cyan-400 text-navy font-bold tracking-widest text-xs uppercase hover:bg-white hover:text-navy transition-all duration-300 shadow-[0_0_15px_rgba(0,173,239,0.2)] rounded">
+          Request Consultation
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-navy border-t border-white/10 py-12 relative z-20">
+  <footer class="bg-midnight border-t border-white/10 py-12 relative z-20">
     <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
       <div class="flex items-center gap-4 group">
-        <div class="w-10 h-10 border border-white/20 flex items-center justify-center rounded bg-midnight group-hover:border-cyan-400 transition-colors">
+        <div class="w-10 h-10 border border-white/20 flex items-center justify-center rounded bg-navy group-hover:border-cyan-400 transition-colors shadow-[0_0_10px_rgba(0,173,239,0.1)]">
           <svg viewBox="0 0 200 130" fill="none" class="w-3/4 h-3/4"><g transform="translate(100, 5)"><polygon points="0,0 22,25 0,16" fill="#ffffff" stroke="#002147" stroke-width="2"/><polygon points="0,0 -22,25 0,16" fill="#00adef" stroke="#002147" stroke-width="2"/><polygon points="0,11 44,48 0,33" fill="#ffffff" stroke="#002147" stroke-width="2"/><polygon points="0,11 -44,48 0,33" fill="#00adef" stroke="#002147" stroke-width="2"/><polygon points="0,22 66,71 0,50" fill="#ffffff" stroke="#002147" stroke-width="2"/><polygon points="0,22 -66,71 0,50" fill="#00adef" stroke="#002147" stroke-width="2"/></g></svg>
         </div>
-        <span class="font-sans text-sm font-bold tracking-[0.2em] text-white">SAI MEGHNA</span>
+        <span class="font-sans text-sm font-bold tracking-[0.2em] text-white">SAI MEGHANA</span>
       </div>
       <div class="font-mono text-[0.65rem] text-white/40 tracking-[0.2em] text-center md:text-right leading-relaxed uppercase">
         EST. 2+ YRS // HYDERABAD, TS // GST REGISTERED <br>
-        &copy; 2026 SAI MEGHNA TECHNICAL CONSULTANTS LLP
+        &copy; 2026 SAI MEGHANA TECHNICAL CONSULTANTS LLP
       </div>
     </div>
   </footer>
@@ -467,7 +590,7 @@ function raf(time) {
 requestAnimationFrame(raf);
 
 // =========================================================================
-// 2. THREE.JS: SUBTLE ARCHITECTURAL BACKGROUND
+// 2. THREE.JS BACKGROUND
 // =========================================================================
 const canvas = document.getElementById('webgl-canvas');
 const scene = new THREE.Scene();
@@ -480,60 +603,44 @@ const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true,
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-const networkGroup = new THREE.Group();
-scene.add(networkGroup);
+const group = new THREE.Group();
+scene.add(group);
 
-// Point Cloud
-const particleCount = 600;
+const geo1 = new THREE.IcosahedronGeometry(12, 1);
+const mat1 = new THREE.MeshBasicMaterial({ color: 0x00adef, wireframe: true, transparent: true, opacity: 0.05 });
+const mesh1 = new THREE.Mesh(geo1, mat1);
+mesh1.position.set(-15, 5, -10);
+group.add(mesh1);
+
+const geo2 = new THREE.TorusKnotGeometry(8, 2, 64, 8);
+const mat2 = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.03 });
+const mesh2 = new THREE.Mesh(geo2, mat2);
+mesh2.position.set(20, -5, -20);
+group.add(mesh2);
+
 const pGeo = new THREE.BufferGeometry();
-const pPos = new Float32Array(particleCount * 3);
-for(let i=0; i < particleCount * 3; i++) {
-  pPos[i] = (Math.random() - 0.5) * 150;
-}
+const pPos = new Float32Array(800 * 3);
+for(let i=0; i < 800 * 3; i++) pPos[i] = (Math.random() - 0.5) * 150;
 pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
 const pMat = new THREE.PointsMaterial({ color: 0x00adef, size: 0.15, transparent: true, opacity: 0.3 });
 const points = new THREE.Points(pGeo, pMat);
-networkGroup.add(points);
+scene.add(points);
 
-// Subtle Lines
-const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.05 });
-const lineGeo = new THREE.BufferGeometry();
-const linePos = [];
-for(let i=0; i<200; i++) {
-  const idx1 = Math.floor(Math.random() * particleCount) * 3;
-  const idx2 = Math.floor(Math.random() * particleCount) * 3;
-  if(Math.abs(pPos[idx1] - pPos[idx2]) < 25) {
-    linePos.push(pPos[idx1], pPos[idx1+1], pPos[idx1+2]);
-    linePos.push(pPos[idx2], pPos[idx2+1], pPos[idx2+2]);
-  }
-}
-lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePos, 3));
-const lines = new THREE.LineSegments(lineGeo, lineMat);
-networkGroup.add(lines);
-
-// Mouse Reactivity
 let mouseX = 0, mouseY = 0;
-const halfX = window.innerWidth / 2;
-const halfY = window.innerHeight / 2;
 document.addEventListener('mousemove', (e) => {
-  mouseX = (e.clientX - halfX) * 0.001;
-  mouseY = (e.clientY - halfY) * 0.001;
+  mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
+  mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
 });
-
-// Scroll Sync
-let scrollY = 0;
-window.addEventListener('scroll', () => { scrollY = window.scrollY; });
 
 const clock = new THREE.Clock();
 function renderWebGL() {
-  const time = clock.getElapsedTime();
-  
-  networkGroup.rotation.x += (mouseY - networkGroup.rotation.x) * 0.05;
-  networkGroup.rotation.y += (mouseX - networkGroup.rotation.y) * 0.05;
-  networkGroup.rotation.z = time * 0.005; // Slower, more elegant spin
-
-  const scrollNorm = scrollY / (document.body.scrollHeight - window.innerHeight || 1);
-  camera.position.z = 40 - (scrollNorm * 15); 
+  const t = clock.getElapsedTime();
+  group.rotation.y += 0.05 * (mouseX - group.rotation.y);
+  group.rotation.x += 0.05 * (mouseY - group.rotation.x);
+  mesh1.rotation.x = t * 0.1; mesh1.rotation.y = t * 0.15;
+  mesh2.rotation.x = t * -0.05; mesh2.rotation.y = t * -0.08;
+  points.position.y = t * 0.5;
+  if (points.position.y > 20) points.position.y = -20;
   
   renderer.render(scene, camera);
   requestAnimationFrame(renderWebGL);
@@ -547,52 +654,146 @@ window.addEventListener('resize', () => {
 });
 
 // =========================================================================
-// 3. GSAP CHOREOGRAPHY & SPLIT-TYPE
+// 3. GSAP CHOREOGRAPHY
 // =========================================================================
 gsap.registerPlugin(ScrollTrigger);
 
-// SplitType Setup
-const splitTexts = document.querySelectorAll('.split-text');
-splitTexts.forEach(text => {
-  new SplitType(text, { types: 'lines, chars', tagName: 'span' });
-});
-
-gsap.defaults({ ease: "power3.out" });
-
-// Navbar Blur effect
+// Navbar Blur
 ScrollTrigger.create({
   start: 'top -50',
   end: 99999,
   toggleClass: { className: 'shadow-lg', targets: '#navbar' }
 });
 
-// 1. Initial Hero Reveal
-const heroTl = gsap.timeline({ delay: 0.1 });
-heroTl.to('.fade-up', { y: 0, opacity: 1, duration: 1, stagger: 0.15 })
-      .to('.char', { y: 0, opacity: 1, duration: 0.8, stagger: 0.015 }, "-=0.8");
+// Hero Animation
+gsap.fromTo('.gsap-hero-up', 
+  { y: 50, opacity: 0 }, 
+  { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: "power3.out", delay: 0.2 }
+);
 
-// 2. Generic Fade Ups on Scroll
+// Generic Fade Ups
 gsap.utils.toArray('.fade-up').forEach(elem => {
-  if (!elem.closest('#hero')) { // Ignore hero elements already animated
-    gsap.fromTo(elem, 
-      { y: 30, opacity: 0 },
-      { scrollTrigger: { trigger: elem, start: "top 85%" }, y: 0, opacity: 1, duration: 0.8 }
-    );
-  }
+  gsap.fromTo(elem, { y: 30, opacity: 0 }, {
+    scrollTrigger: { trigger: elem, start: "top 85%" },
+    y: 0, opacity: 1, duration: 0.8, ease: "power3.out"
+  });
 });
 
-// 3. Divider Lines animation
-gsap.utils.toArray('.gsap-line').forEach(line => {
-  gsap.fromTo(line, 
-    { scaleX: 0 },
-    { scrollTrigger: { trigger: line, start: "top 85%" }, scaleX: 1, duration: 1, ease: "power4.out" }
-  );
+// Services Grid Cards
+gsap.fromTo('.gsap-card', { y: 40, opacity: 0 }, {
+  scrollTrigger: { trigger: '#why-choose-us', start: 'top 70%' },
+  y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out"
 });
 
-// Sync Lenis with ScrollTrigger
+// Workflow Line
+gsap.to('#progress-line', {
+  scrollTrigger: {
+    trigger: '.workflow-step', start: 'top center', endTrigger: '.workflow-step:last-child', end: 'bottom 20%', scrub: 1
+  },
+  scaleY: 1, ease: "none"
+});
+
+// Workflow Steps Reveal
+gsap.utils.toArray('.workflow-step').forEach(step => {
+  gsap.to(step, {
+    scrollTrigger: { trigger: step, start: 'top 75%' },
+    y: 0, opacity: 1, duration: 0.8, ease: "power2.out"
+  });
+});
+
+// 3D Hover Tilt
+document.querySelectorAll('.tilt-wrapper').forEach(wrapper => {
+  const element = wrapper.querySelector('.tilt-element');
+  wrapper.addEventListener('mousemove', e => {
+    const rect = wrapper.getBoundingClientRect();
+    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const centerX = rect.width / 2, centerY = rect.height / 2;
+    gsap.to(element, { rotateX: ((y - centerY)/centerY)*-10, rotateY: ((x - centerX)/centerX)*10, duration: 0.5, ease: "power2.out" });
+  });
+  wrapper.addEventListener('mouseleave', () => {
+    gsap.to(element, { rotateX: 0, rotateY: 0, duration: 0.8, ease: "power2.out" });
+  });
+});
+
+// Tabs Logic for Philosophy Section
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => {
+      b.classList.remove('bg-cyan-400/10', 'border-cyan-400/30', 'text-white');
+      b.classList.add('hover:bg-white/5', 'border-transparent', 'text-white/50');
+    });
+    tabContents.forEach(c => { c.classList.add('hidden'); gsap.killTweensOf(c); });
+    
+    btn.classList.remove('hover:bg-white/5', 'border-transparent', 'text-white/50');
+    btn.classList.add('bg-cyan-400/10', 'border-cyan-400/30', 'text-white');
+    
+    const target = document.getElementById(btn.getAttribute('data-target'));
+    target.classList.remove('hidden');
+    gsap.fromTo(target, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" });
+  });
+});
+
+// Lenis Sync
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
+
+// =========================================================================
+// 4. FORM HANDLING (MAILTO INTEGRATION)
+// =========================================================================
+document.getElementById('enquiry-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById('floating_name').value.trim();
+  const company = document.getElementById('floating_company').value.trim();
+  const email = document.getElementById('floating_email').value.trim();
+  const phone = document.getElementById('floating_phone').value.trim();
+  const service = document.getElementById('floating_service').value;
+  const details = document.getElementById('floating_details').value.trim();
+  
+  const subject = encodeURIComponent(`New Project Enquiry: ${service} - ${company}`);
+  const body = encodeURIComponent(
+`Corporate Enquiry Form Submission
+
+-------------------------------------------
+CLIENT DETAILS
+-------------------------------------------
+Name: ${name}
+Company: ${company}
+Email: ${email}
+Phone: ${phone}
+
+-------------------------------------------
+PROJECT REQUIREMENTS
+-------------------------------------------
+Service Category: ${service}
+
+Technical Details:
+${details}
+
+-------------------------------------------
+System Generated Email from Website
+`
+  );
+  
+  window.location.href = `mailto:smtcllp2024@gmail.com?subject=${subject}&body=${body}`;
+  
+  // Minimal success state change
+  const btn = this.querySelector('button');
+  const originalText = btn.innerText;
+  btn.innerText = "TRANSMISSION INITIATED";
+  btn.style.backgroundColor = "#00adef";
+  btn.style.color = "#001229";
+  
+  setTimeout(() => {
+    btn.innerText = originalText;
+    btn.style.backgroundColor = "transparent";
+    btn.style.color = "#00adef";
+    this.reset();
+  }, 3000);
+});
 </script>
 </body>
 </html>
