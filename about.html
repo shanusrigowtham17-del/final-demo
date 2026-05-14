@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us | Sai Meghna Technical Consultants LLP</title>
+<title>About Us | Sai Meghana Technical Consultants LLP</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ── RESET & ROOT ─────────────────────────────── */
 :root {
-  /* Clean white and light blue-grey backgrounds */
   --bg-main: #ffffff;
   --bg-alt: #f0f4f8; 
   --bg-glass: rgba(255, 255, 255, 0.92);
   
-  /* Text colors matching the deep navy of the logo */
   --text-main: #001229;
   --text-muted: #4a5d73;
   --text-light: #8b9eb3;
   
-  /* Theme Accents derived from the logo gradient */
   --accent-cyan: #00adef;
   --accent-navy: #002147;
   --gradient-primary: linear-gradient(135deg, #00adef, #004d99);
@@ -145,7 +142,6 @@ nav {
   content:''; width:5px; height:5px; border-radius:50%;
   background:var(--accent-cyan); animation:blink 2s infinite;
 }
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 .hero-title {
   font-family:'Playfair Display',serif;
   font-size:clamp(2.5rem,5.5vw,4.8rem);
@@ -226,42 +222,133 @@ nav {
   color: var(--text-muted);
 }
 
-/* ── TRUST SECTION ────────────────────────────── */
-.trust-box {
-  background: var(--accent-navy);
-  padding: 3rem;
-  border-radius: 4px;
-  color: var(--bg-main);
-  max-width: 800px;
-  margin-top: 2rem;
-  border-left: 4px solid var(--accent-cyan);
-}
-.trust-box p {
-  color: var(--text-light);
-  font-size: 0.95rem;
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-.trust-box .highlight {
-  color: #fff;
-  font-weight: 600;
-}
-
 /* ── FOOTER ──────────────────────────────────── */
 footer {
-  position:relative; z-index:50;
-  background:var(--accent-navy); border-top:1px solid var(--border);
-  padding:2.5rem 4rem; color:var(--bg-main);
-  display:flex; justify-content:space-between; align-items:center;
-  flex-wrap:wrap; gap:1.5rem;
+  position: relative;
+  z-index: 50;
+  background: var(--bg-main); 
+  border-top: 1px solid var(--border);
+  padding: 4rem 4rem 1.5rem;
   pointer-events: auto;
 }
-.ft-brand { font-family:'DM Sans',sans-serif; font-size:1.1rem; font-weight:600; color:var(--bg-main); letter-spacing:0.05em; display:flex; align-items:center; gap:12px; flex-wrap: wrap;}
-.ft-meta { font-size:.75rem; color:var(--text-light); margin-top:5px; }
-.ft-links { display:flex; gap:2rem; flex-wrap: wrap;}
-.ft-links a { font-size:.75rem; color:var(--text-light); text-decoration:none; text-transform:uppercase; letter-spacing:.08em; transition:color .3s; font-weight:600;}
-.ft-links a:hover { color:var(--accent-cyan); }
-.ft-copy { font-size:.73rem; color:var(--text-light); }
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.ft-brand-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 250px;
+}
+.ft-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-top: 12px;
+  text-align: center;
+}
+.ft-brand-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+  text-align: center;
+}
+.ft-address-col {
+  flex: 2;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.ft-address-item {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+.ft-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--text-muted);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.ft-address-text {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+.ft-address-text strong {
+  color: var(--accent-navy);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.ft-contact-col {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.ft-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.ft-contact-item:hover {
+  color: var(--accent-navy);
+}
+.ft-bottom {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.ft-copy {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+.ft-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.ft-links a {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+  font-weight: 600;
+}
+.ft-links a:hover {
+  color: var(--accent-cyan);
+}
 
 /* ── REVEAL ANIMATION ────────────────────────── */
 .reveal { opacity:0; transform:translateY(30px); transition:opacity .75s ease,transform .75s ease; }
@@ -302,8 +389,11 @@ footer {
   .nav-brand { justify-content: center; }
   .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; }
   .page-section { padding: 8rem 2rem 4rem; } 
-  footer { padding: 2rem; }
   .scene-indicator { display: none; }
+  .footer-container { flex-direction: column; align-items: flex-start; }
+  .ft-brand-col { align-items: flex-start; }
+  .ft-brand-name, .ft-brand-sub { text-align: left; }
+  footer { padding: 2rem 1.5rem; }
 }
 
 @media(max-width: 600px){
@@ -312,32 +402,10 @@ footer {
   .brand-text { font-size: 1.1rem; }
   .brand-text span { font-size: 0.55rem; }
   .nav-links { gap: 1rem; font-size: 0.75rem; }
-  
   .page-section { padding: 8rem 1.5rem 4rem; }
   .hero-sub { font-size: 0.95rem; }
-  .hero-badge { font-size: 0.65rem; padding: 0.3rem 0.8rem; }
-  
   .sec-title { font-size: 2.2rem; }
-  .sec-desc { font-size: 0.9rem; }
-  
   .pillar-card { padding: 1.5rem; }
-  .pillar-icon { font-size: 1.5rem; margin-bottom: 1rem; }
-  .pillar-title { font-size: 1.2rem; }
-  
-  .trust-box { padding: 1.5rem; }
-  .trust-box p { font-size: 0.85rem; }
-  
-  footer { 
-    padding: 2rem 1.5rem; 
-    flex-direction: column; 
-    text-align: center; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 2rem;
-  }
-  .ft-brand { justify-content: center; }
-  .ft-links { justify-content: center; }
-  
   .state-badge { padding: 0.4rem 1rem; font-size: 0.6rem; bottom: 1rem; }
 }
 </style>
@@ -386,7 +454,7 @@ footer {
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="about.html" class="active" data-nav>About</a>
+    <a href="about.html" class="active">About</a>
     <a href="SERVICES.html">Services</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -416,19 +484,16 @@ footer {
       <p class="sec-desc">We established our firm with a vision to deliver end-to-end solutions that combine technical expertise, compliance clarity, and innovative design to support industrial and commercial growth.</p>
       
       <div class="pillars-grid">
-        <!-- Pillar 1 -->
         <div class="pillar-card">
           <div class="pillar-icon">🏗️</div>
           <h3 class="pillar-title">Civil Supervision</h3>
           <p class="pillar-text">Expert supervision of large-scale civil works for factories and industrial complexes. We ensure every project is delivered with precise technical execution and accountability.</p>
         </div>
-        <!-- Pillar 2 -->
         <div class="pillar-card">
           <div class="pillar-icon">📊</div>
           <h3 class="pillar-title">Project Consultancy</h3>
           <p class="pillar-text">Guiding clients through critical phases including feasibility studies, Detailed Project Report (DPR) preparation, and navigating complex regulatory approvals.</p>
         </div>
-        <!-- Pillar 3 -->
         <div class="pillar-card">
           <div class="pillar-icon">📐</div>
           <h3 class="pillar-title">Architectural Design</h3>
@@ -443,39 +508,74 @@ footer {
     <div class="reveal content-block">
       <div class="sec-label">Foundation & Integrity</div>
       <h2 class="sec-title">Built on<br><em>Transparency.</em></h2>
-      <p class="sec-desc">Every engagement is backed by our unwavering commitment to integrity, compliance, and ultimate client success.With expertise spanning infrastructure, consultancy, and design, Sai Meghna Technical Consultants LLP is your trusted partner for building sustainable, compliant, and future-ready projects.</p>
-      
-      
+      <p class="sec-desc">Every engagement is backed by our unwavering commitment to integrity, compliance, and ultimate client success. With expertise spanning infrastructure, consultancy, and design, Sai Meghna Technical Consultants LLP is your trusted partner for building sustainable, compliant, and future-ready projects.</p>
+    </div>
   </section>
 
 </div><!-- /scroll-container -->
 
 <footer>
-  <div>
-    <div class="ft-brand">
-      <div style="width: 32px; height: 32px;">
-        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="footer-container">
+    
+    <!-- COLUMN 1: Logo & Brand -->
+    <div class="ft-brand-col">
+      <div style="width: 80px; height: 80px;">
+        <svg width="100%" height="100%" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(100, 5)">
-            <polygon points="0,0 22,25 0,16" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,0 -22,25 0,16" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,11 44,48 0,33" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,11 -44,48 0,33" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,22 66,71 0,50" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,22 -66,71 0,50" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,0 22,25 0,16" fill="#001a4d" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,0 -22,25 0,16" fill="#00a8e8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 44,48 0,33" fill="#002b66" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 -44,48 0,33" fill="#00b4d8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 66,71 0,50" fill="#003c80" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 -66,71 0,50" fill="#00c0f0" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,33 88,94 0,67" fill="#004d99" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,33 -88,94 0,67" fill="#00ccff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,44 110,117 0,84" fill="#0066b3" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,44 -110,117 0,84" fill="#00d4ff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
           </g>
         </svg>
       </div>
-      SAI MEGHNA TECHNICAL CONSULTANTS
+      <div class="ft-brand-name">SAI MEGHANA</div>
+      <div class="ft-brand-sub">Technical Consultants</div>
     </div>
-    <div class="ft-meta">Hyderabad, Telangana · GST: 36**********1ZZ · Reg. Oct 2024</div>
+
+    <!-- COLUMN 2: Addresses -->
+    <div class="ft-address-col">
+      <div class="ft-address-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <div class="ft-address-text">
+          <strong>Regd. Office</strong> - #304, Anushka Trendz, Road No. 14, Banjara Hills, Hyderabad, Telangana India - 500034
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMN 3: Contact Info -->
+    <div class="ft-contact-col">
+      <a href="mailto:smtcllp2024@gmail.com" class="ft-contact-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        <span>smtcllp2024@gmail.com</span>
+      </a>
+      <a href="#" class="ft-contact-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span>www.saimeghana.com</span>
+      </a>
+      <a href="tel:+919490463775" class="ft-contact-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <span>+91 94904 63775</span>
+      </a>
+    </div>
+
   </div>
-  <div class="ft-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="SERVICES.html">Services</a>
-    <a href="contact.html">Contact</a>
+
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2024 Sai Meghana Technical Consultants LLP. All rights reserved.</div>
+    <div class="ft-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="SERVICES.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </div>
-  <div class="ft-copy">© 2024 Sai Meghna Technical Consultants LLP. All rights reserved.</div>
 </footer>
 
 <!-- THREE.JS CDN -->
@@ -483,14 +583,7 @@ footer {
 
 <script>
 'use strict';
-/* ═══════════════════════════════════════════════════════════
-   SAI MEGHNA — INTERACTIVE 3D BACKGROUND ENGINE
-   Architecture: Three.js r128
-   Theme: Deep Blue Blueprint Integration 
-   Interaction: Desktop Hover Raycasting, Drag to Orbit, Particle Repulsion
-═══════════════════════════════════════════════════════════ */
 
-// ── CORE SETUP ──────────────────────────────────────────
 const canvas = document.getElementById('three-canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
@@ -507,7 +600,6 @@ const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerH
 camera.position.set(0, 14, 52);
 camera.lookAt(0, 0, 0);
 
-// ── STATE ────────────────────────────────────────────────
 const state = {
   scroll: 0,
   section: 'about',
@@ -527,53 +619,28 @@ const state = {
 
 const raycaster = new THREE.Raycaster();
 
-// ── MINIMAL THEME PALETTE (DEEP BLUE & NAVY) ──────────
 const C = {
   ground: new THREE.Color(0xffffff),
-  cyan:   new THREE.Color(0x002244), // Deep Midnight Blue
+  cyan:   new THREE.Color(0x002244), 
   navy:   new THREE.Color(0x001f3f)
 };
 
-// ── MATERIALS ─────────────────────────────────────────────
 const MAT = {
-  blueprint: new THREE.MeshBasicMaterial({
-    color: C.cyan, wireframe: true, transparent: true, opacity: 0.15
-  }),
-  blueprintGlow: new THREE.LineBasicMaterial({
-    color: C.cyan, transparent: true, opacity: 0.35
-  }),
-  assembly: new THREE.MeshLambertMaterial({
-    color: 0x003366, transparent: true, opacity: 0.7,
-    emissive: 0x001229, emissiveIntensity: 0.2
-  }),
-  solid: new THREE.MeshLambertMaterial({
-    color: 0xffffff,
-    emissive: C.cyan, emissiveIntensity: 0.05
-  }),
+  blueprint: new THREE.MeshBasicMaterial({ color: C.cyan, wireframe: true, transparent: true, opacity: 0.15 }),
+  blueprintGlow: new THREE.LineBasicMaterial({ color: C.cyan, transparent: true, opacity: 0.35 }),
+  assembly: new THREE.MeshLambertMaterial({ color: 0x003366, transparent: true, opacity: 0.7, emissive: 0x001229, emissiveIntensity: 0.2 }),
+  solid: new THREE.MeshLambertMaterial({ color: 0xffffff, emissive: C.cyan, emissiveIntensity: 0.05 }),
   ground: new THREE.MeshLambertMaterial({ color: C.ground }),
-  gridLine: new THREE.LineBasicMaterial({
-    color: C.cyan, transparent: true, opacity: 0.08
-  }),
-  pipe: new THREE.MeshLambertMaterial({
-    color: 0xe0f4fc, emissive: 0x002244, emissiveIntensity: 0.1
-  }),
+  gridLine: new THREE.LineBasicMaterial({ color: C.cyan, transparent: true, opacity: 0.08 }),
+  pipe: new THREE.MeshLambertMaterial({ color: 0xe0f4fc, emissive: 0x002244, emissiveIntensity: 0.1 }),
 };
 
-// ── LIGHTS ───────────────────────────────────────────────
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.55); 
 scene.add(ambientLight);
 
 const sunLight = new THREE.DirectionalLight(0xffffff, 0.65);
 sunLight.position.set(30, 60, 20);
 sunLight.castShadow = true;
-sunLight.shadow.mapSize.set(1024, 1024);
-sunLight.shadow.camera.near = 0.5;
-sunLight.shadow.camera.far = 200;
-sunLight.shadow.camera.left = -80;
-sunLight.shadow.camera.right = 80;
-sunLight.shadow.camera.top = 80;
-sunLight.shadow.camera.bottom = -80;
-sunLight.shadow.bias = -0.001;
 scene.add(sunLight);
 
 const cyanLight = new THREE.PointLight(0x002244, 1.0, 80);
@@ -584,223 +651,61 @@ const rimLight = new THREE.DirectionalLight(0x004d99, 0.5);
 rimLight.position.set(-30, 10, -20);
 scene.add(rimLight);
 
-// ── TERRAIN GRID ────────────────────────────────────────
 function buildGrid() {
   const group = new THREE.Group();
   const size = 120, step = 6;
-
   const groundGeo = new THREE.PlaneGeometry(size, size);
   const ground = new THREE.Mesh(groundGeo, MAT.ground);
   ground.rotation.x = -Math.PI / 2;
   ground.receiveShadow = true;
   group.add(ground);
-
   for (let i = -size/2; i <= size/2; i += step) {
-    const hGeo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(-size/2, 0.02, i),
-      new THREE.Vector3(size/2, 0.02, i)
-    ]);
-    const vGeo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(i, 0.02, -size/2),
-      new THREE.Vector3(i, 0.02, size/2)
-    ]);
+    const hGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-size/2, 0.02, i), new THREE.Vector3(size/2, 0.02, i)]);
+    const vGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(i, 0.02, -size/2), new THREE.Vector3(i, 0.02, size/2)]);
     group.add(new THREE.Line(hGeo, MAT.gridLine));
     group.add(new THREE.Line(vGeo, MAT.gridLine));
   }
-
-  const axisGeo = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(-size/2, 0.04, 0),
-    new THREE.Vector3(size/2, 0.04, 0)
-  ]);
-  const axisLine = new THREE.Line(axisGeo, new THREE.LineBasicMaterial({
-    color: C.navy, transparent: true, opacity: 0.15
-  }));
-  group.add(axisLine);
-
   return group;
 }
 
-// ── BUILDING FACTORY ─────────────────────────────────────
 function createBuilding(w, h, d, x, z, layer = 1) {
   const group = new THREE.Group();
   group.userData = { layer, buildState: 0, x, z, isHovered: false };
-
   const geo = new THREE.BoxGeometry(w, h, d);
-
   const bp = new THREE.Mesh(geo, MAT.blueprint.clone());
   bp.userData.type = 'blueprint';
-  bp.visible = true;
-
   const asm = new THREE.Mesh(geo, MAT.assembly.clone());
-  asm.userData.type = 'assembly';
-  asm.visible = false;
-
+  asm.userData.type = 'assembly'; asm.visible = false;
   const solid = new THREE.Mesh(geo, MAT.solid.clone());
-  solid.userData.type = 'solid';
-  solid.castShadow = true;
-  solid.receiveShadow = true;
-  solid.visible = false;
-
+  solid.userData.type = 'solid'; solid.visible = false;
   group.add(bp, asm, solid);
   group.position.set(x, h / 2, z);
-
   return group;
 }
 
-// ── STRUCTURAL FRAME ─────────────────────────────────────
 function createFrame(w, h, d, x, z) {
   const group = new THREE.Group();
   group.userData = { layer: 2, buildState: 0 };
-
-  const cols = [];
   const positions = [[-w/2,0,-d/2],[w/2,0,-d/2],[-w/2,0,d/2],[w/2,0,d/2]];
-
   positions.forEach(([cx,cy,cz]) => {
-    const colGeo = new THREE.CylinderGeometry(0.18, 0.18, h, 6);
-    const col = new THREE.Mesh(colGeo, MAT.blueprint.clone());
-    col.position.set(cx, h/2, cz);
-    col.castShadow = true;
-    group.add(col);
-    cols.push(col);
+    const col = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, h, 6), MAT.blueprint.clone());
+    col.position.set(cx, h/2, cz); group.add(col);
   });
-
-  const beamPairs = [
-    [positions[0], positions[1]],
-    [positions[2], positions[3]],
-    [positions[0], positions[2]],
-    [positions[1], positions[3]],
-  ];
-
-  [0, h/2, h].forEach(y => {
-    beamPairs.forEach(([a, b]) => {
-      const pts = [
-        new THREE.Vector3(a[0], y, a[2]),
-        new THREE.Vector3(b[0], y, b[2])
-      ];
-      const geo = new THREE.BufferGeometry().setFromPoints(pts);
-      const beam = new THREE.Line(geo, MAT.blueprintGlow.clone());
-      group.add(beam);
-    });
-  });
-
   group.position.set(x, 0, z);
   return group;
 }
 
-// ── SILO / CHIMNEY ───────────────────────────────────────
 function createSilo(r, h, x, z) {
   const group = new THREE.Group();
   group.userData = { layer: 1, buildState: 0, isHovered: false };
-
   const geo = new THREE.CylinderGeometry(r, r * 1.1, h, 12);
-  const bp = new THREE.Mesh(geo, MAT.blueprint.clone());
-  const solid = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({
-    color: 0xffffff, emissive: C.cyan, emissiveIntensity: 0.05
-  }));
+  const solid = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ color: 0xffffff, emissive: C.cyan, emissiveIntensity: 0.05 }));
   solid.visible = false;
-  solid.castShadow = true;
-
-  group.add(bp, solid);
+  group.add(new THREE.Mesh(geo, MAT.blueprint.clone()), solid);
   group.position.set(x, h/2, z);
   return group;
 }
 
-// ── UNDERGROUND PIPES (Layer 0) ──────────────────────────
-function buildUnderground() {
-  const group = new THREE.Group();
-  const pipeColor = new THREE.MeshLambertMaterial({
-    color: 0x90e0ef, emissive: 0x0077b6, emissiveIntensity: 0.1,
-    transparent: true, opacity: 0.85
-  });
-
-  [[-8, -5, 0.3], [0, -5, 0.25], [8, -5, 0.2]].forEach(([x, y, r]) => {
-    const geo = new THREE.CylinderGeometry(r, r, 80, 8);
-    const pipe = new THREE.Mesh(geo, pipeColor);
-    pipe.rotation.z = Math.PI / 2;
-    pipe.position.set(0, y, x);
-    group.add(pipe);
-  });
-
-  for (let z = -30; z <= 30; z += 10) {
-    const geo = new THREE.CylinderGeometry(0.15, 0.15, 22, 6);
-    const pipe = new THREE.Mesh(geo, pipeColor.clone());
-    pipe.rotation.x = Math.PI / 2;
-    pipe.position.set(0, -4.5, z);
-    group.add(pipe);
-  }
-
-  group.userData = { layer: 0 };
-  return group;
-}
-
-// ── PARTICLE SYSTEM (Interactive Deep Blue Dust) ───────────
-class ParticleSystem {
-  constructor() {
-    this.count = 250;
-    this.geo = new THREE.BufferGeometry();
-    this.positions = new Float32Array(this.count * 3);
-    this.velocities = new Float32Array(this.count * 3);
-    this.ages = new Float32Array(this.count);
-    this.maxAges = new Float32Array(this.count);
-
-    for (let i = 0; i < this.count; i++) this.spawn(i);
-
-    this.geo.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
-    this.mat = new THREE.PointsMaterial({
-      color: 0x002244,
-      size: 0.3,
-      transparent: true, opacity: 0.6, 
-      sizeAttenuation: true,
-      blending: THREE.NormalBlending,
-      depthWrite: false
-    });
-    this.points = new THREE.Points(this.geo, this.mat);
-  }
-
-  spawn(i) {
-    const spread = 40;
-    this.positions[i*3]   = (Math.random() - .5) * spread;
-    this.positions[i*3+1] = Math.random() * 2;
-    this.positions[i*3+2] = (Math.random() - .5) * spread;
-    this.velocities[i*3]   = (Math.random() - .5) * 0.02;
-    this.velocities[i*3+1] = Math.random() * 0.04 + 0.01;
-    this.velocities[i*3+2] = (Math.random() - .5) * 0.02;
-    this.ages[i] = 0;
-    this.maxAges[i] = 80 + Math.random() * 120;
-  }
-
-  update(intensity = 1.0, mouseX, mouseY) {
-    let worldMouseX = mouseX * 30;
-    let worldMouseY = -mouseY * 30; 
-    
-    for (let i = 0; i < this.count; i++) {
-      this.ages[i]++;
-      if (this.ages[i] > this.maxAges[i]) { this.spawn(i); continue; }
-      
-      this.positions[i*3]   += this.velocities[i*3];
-      this.positions[i*3+1] += this.velocities[i*3+1];
-      this.positions[i*3+2] += this.velocities[i*3+2];
-      this.velocities[i*3+1] -= 0.0004;
-      
-      let dx = this.positions[i*3] - worldMouseX;
-      let dy = this.positions[i*3+1] - worldMouseY; 
-      let distSq = dx*dx + dy*dy;
-      
-      if (distSq < 150) {
-          this.velocities[i*3] += dx * 0.0008;
-          this.velocities[i*3+1] += dy * 0.0008; 
-          this.velocities[i*3+2] += dy * 0.0008; 
-      }
-      
-      this.velocities[i*3] *= 0.98;
-      this.velocities[i*3+2] *= 0.98;
-    }
-    this.geo.attributes.position.needsUpdate = true;
-    this.mat.opacity = 0.6 * intensity; 
-  }
-}
-
-// ── SCENE CONSTRUCTION ───────────────────────────────────
 const sceneGroups = {
   terrain: buildGrid(),
   underground: buildUnderground(),
@@ -810,319 +715,107 @@ const sceneGroups = {
   particles: new ParticleSystem(),
 };
 
-scene.add(sceneGroups.terrain);
-scene.add(sceneGroups.underground);
-sceneGroups.underground.position.y = -4;
+function buildUnderground() {
+  const group = new THREE.Group();
+  const pipeColor = new THREE.MeshLambertMaterial({ color: 0x90e0ef, emissive: 0x0077b6, emissiveIntensity: 0.1, transparent: true, opacity: 0.85 });
+  [[-8, -5, 0.3], [0, -5, 0.25]].forEach(([x, y, r]) => {
+    const pipe = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 80, 8), pipeColor);
+    pipe.rotation.z = Math.PI / 2; pipe.position.set(0, y, x); group.add(pipe);
+  });
+  group.userData = { layer: 0 };
+  return group;
+}
 
-const buildingDefs = [
-  [12, 8, 10, -20, -15, 1], [8, 12, 8, 0, -18, 1],
-  [14, 6, 12, 22, -12, 1], [10, 16, 8, -28, 5, 1],
-  [6, 10, 6, 16, 10, 2],   [20, 5, 14, 5, 8, 1],
-  [8, 6, 8, -10, 20, 2],   [12, 8, 10, 28, 18, 2],
-];
-buildingDefs.forEach(([w, h, d, x, z, layer]) => {
-  const b = createBuilding(w, h, d, x, z, layer);
-  sceneGroups.buildings.add(b);
-});
+class ParticleSystem {
+  constructor() {
+    this.count = 250; this.geo = new THREE.BufferGeometry();
+    this.positions = new Float32Array(this.count * 3); this.velocities = new Float32Array(this.count * 3);
+    for (let i = 0; i < this.count; i++) this.spawn(i);
+    this.geo.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+    this.mat = new THREE.PointsMaterial({ color: 0x002244, size: 0.3, transparent: true, opacity: 0.6 });
+    this.points = new THREE.Points(this.geo, this.mat);
+  }
+  spawn(i) {
+    this.positions[i*3] = (Math.random() - .5) * 40; this.positions[i*3+1] = Math.random() * 2;
+    this.positions[i*3+2] = (Math.random() - .5) * 40; this.velocities[i*3+1] = Math.random() * 0.04 + 0.01;
+  }
+  update(intensity, mx, my) {
+    for (let i = 0; i < this.count; i++) { this.positions[i*3+1] += 0.01; if(this.positions[i*3+1] > 20) this.spawn(i); }
+    this.geo.attributes.position.needsUpdate = true;
+  }
+}
+
+scene.add(sceneGroups.terrain); scene.add(sceneGroups.underground);
+const buildingDefs = [[12, 8, 10, -20, -15, 1], [8, 12, 8, 0, -18, 1], [14, 6, 12, 22, -12, 1]];
+buildingDefs.forEach(d => sceneGroups.buildings.add(createBuilding(...d)));
 scene.add(sceneGroups.buildings);
-
-const frameDefs = [
-  [8, 14, 6, -14, 5], [10, 18, 8, 10, -5], [6, 12, 5, 28, -5]
-];
-frameDefs.forEach(([w, h, d, x, z]) => {
-  sceneGroups.frames.add(createFrame(w, h, d, x, z));
-});
-scene.add(sceneGroups.frames);
-
-[[1.8, 22, -22, 10], [2.5, 18, 30, 5], [1.2, 15, -5, -28]].forEach(([r, h, x, z]) => {
-  sceneGroups.silos.add(createSilo(r, h, x, z));
-});
-scene.add(sceneGroups.silos);
-
 scene.add(sceneGroups.particles.points);
 
-// ── SECTION → SCENE STATE MAP (Adapted for About Page) ───
 const SECTION_STATES = {
-  about:     { camPos: [0, 14, 52],   camLook: [0, 2, 0],   buildState: 0.3,  lightIntensity: 0.7,  label: 'Overview Map' },
-  expertise: { camPos: [20, 18, 30],  camLook: [-5, 5, -5], buildState: 0.65, lightIntensity: 0.85, label: 'Architectural Blueprint' },
-  trust:     { camPos: [-15, 12, 35], camLook: [5, 2, 0],   buildState: 1.0,  lightIntensity: 1.0,  label: 'Solid Foundation' },
+  about:     { camPos: [0, 14, 52],   camLook: [0, 2, 0],   buildState: 0.3,  label: 'Overview Map' },
+  expertise: { camPos: [20, 18, 30],  camLook: [-5, 5, -5], buildState: 0.65, label: 'Architectural Blueprint' },
+  trust:     { camPos: [-15, 12, 35], camLook: [5, 2, 0],   buildState: 1.0,  label: 'Solid Foundation' },
 };
 
-// ── BUILD STATE APPLIER (With Hover Logic) ───────────────
 function lerp(a, b, t) { return a + (b - a) * t; }
 
 function applyBuildState(group, progress) {
   group.children.forEach(obj => {
-    if (!obj.userData?.buildState !== undefined) return;
-
-    if (obj.userData?.layer !== undefined) {
-      const layer = obj.userData.layer;
-      const layerOffset = layer === 0 ? 0 : layer === 2 ? 0.2 : 0.1;
-      const localProg = Math.max(0, Math.min(1, (progress - layerOffset) / 0.8));
-
-      obj.scale.y = 0.05 + localProg * 0.95;
-      
-      const targetScaleXZ = obj.userData.isHovered ? 1.05 : 1.0;
-      if(obj.scale.x === undefined) obj.scale.x = 1;
-      obj.scale.x = lerp(obj.scale.x, targetScaleXZ, 0.1);
-      obj.scale.z = obj.scale.x;
-
-      obj.children.forEach(mesh => {
-        if (!mesh.userData?.type) return;
-        const t = mesh.userData.type;
-        if (t === 'blueprint') {
-          mesh.visible = localProg < 0.5;
-          if (mesh.material) mesh.material.opacity = (0.5 - localProg) * 0.35; 
-        } else if (t === 'assembly') {
-          mesh.visible = localProg >= 0.3 && localProg < 0.85;
-          if (mesh.material) mesh.material.opacity = Math.sin(localProg * Math.PI) * 0.85;
-        } else if (t === 'solid') {
-          mesh.visible = localProg >= 0.7;
-          if (mesh.material) {
-             mesh.material.opacity = Math.min(1, (localProg - 0.7) / 0.3);
-             mesh.material.emissiveIntensity = obj.userData.isHovered ? 0.3 : 0.05;
-          }
-        }
-      });
-    }
-
-    if (obj.type === 'Group' && obj.children.length === 2) {
-      const localProg = Math.max(0, Math.min(1, progress));
-      obj.scale.y = 0.02 + localProg * 0.98;
-      
-      const targetScaleXZ = obj.userData.isHovered ? 1.05 : 1.0;
-      obj.scale.x = lerp(obj.scale.x, targetScaleXZ, 0.1);
-      obj.scale.z = obj.scale.x;
-      
-      const [bp, solid] = obj.children;
-      if (bp?.material) { bp.material.opacity = (1 - localProg) * 0.25; bp.visible = localProg < 0.8; }
-      if (solid) { 
-          solid.visible = localProg > 0.6; 
-          solid.material.emissiveIntensity = obj.userData.isHovered ? 0.3 : 0.05;
-      }
-    }
-  });
-}
-
-function applyFrameState(progress) {
-  sceneGroups.frames.children.forEach((frame, fi) => {
-    const offset = fi * 0.1;
-    const lp = Math.max(0, Math.min(1, (progress - offset) / 0.7));
-    frame.children.forEach(child => {
-      if (child.material) {
-        if (child instanceof THREE.Line) {
-          child.material.opacity = 0.1 + lp * 0.25;
-        } else {
-          child.material.opacity = 0.1 + lp * 0.2;
-          child.material.emissiveIntensity = lp * 0.1;
-        }
-      }
+    const localProg = Math.max(0, Math.min(1, progress));
+    obj.scale.y = 0.05 + localProg * 0.95;
+    obj.children.forEach(mesh => {
+      const t = mesh.userData.type;
+      if (t === 'blueprint') mesh.visible = localProg < 0.5;
+      if (t === 'assembly') mesh.visible = localProg >= 0.3 && localProg < 0.85;
+      if (t === 'solid') mesh.visible = localProg >= 0.7;
     });
-    frame.scale.y = Math.max(0.02, lp);
   });
 }
-
-// ── INTERACTION HANDLERS (Drag / Swipe / Hover) ───────────
-let previousMousePosition = { x: 0, y: 0 };
 
 function handleMove(clientX, clientY) {
-  state.targetMouse.x = (clientX / window.innerWidth  - 0.5) * 2;
+  state.targetMouse.x = (clientX / window.innerWidth - 0.5) * 2;
   state.targetMouse.y = (clientY / window.innerHeight - 0.5) * 2;
 }
 
-window.addEventListener('mousedown', (e) => {
-    state.isDragging = true;
-    previousMousePosition = { x: e.clientX, y: e.clientY };
-});
-window.addEventListener('mouseup', () => state.isDragging = false);
-window.addEventListener('mousemove', (e) => {
-    handleMove(e.clientX, e.clientY);
-    if (state.isDragging) {
-        const deltaX = e.clientX - previousMousePosition.x;
-        state.dragOffset.x -= deltaX * 0.005; 
-    }
-    previousMousePosition = { x: e.clientX, y: e.clientY };
-});
-
-window.addEventListener('touchstart', (e) => {
-    state.isDragging = true;
-    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-}, {passive: true});
-window.addEventListener('touchend', () => state.isDragging = false);
-window.addEventListener('touchmove', (e) => {
-    handleMove(e.touches[0].clientX, e.touches[0].clientY);
-    if (state.isDragging) {
-        const deltaX = e.touches[0].clientX - previousMousePosition.x;
-        state.dragOffset.x -= deltaX * 0.008; 
-    }
-    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-}, {passive: true});
-
-
-// ── SCROLL DETECTION ─────────────────────────────────────
-function getCurrentSection() {
+window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+window.addEventListener('scroll', () => {
   const sections = document.querySelectorAll('[data-scene]');
-  let current = 'about';
   sections.forEach(sec => {
     const rect = sec.getBoundingClientRect();
-    if (rect.top <= window.innerHeight * 0.55) {
-      current = sec.dataset.scene;
-    }
+    if (rect.top <= window.innerHeight * 0.55) state.section = sec.dataset.scene;
   });
-  return current;
+}, { passive: true });
+
+const currentCamPos  = new THREE.Vector3().fromArray(SECTION_STATES.about.camPos);
+const currentCamLook = new THREE.Vector3().fromArray(SECTION_STATES.about.camLook);
+
+function animate(now = 0) {
+  requestAnimationFrame(animate);
+  const dt = (now - state.lastTime) / 1000; state.lastTime = now; state.time += dt;
+  state.mouse.x = lerp(state.mouse.x, state.targetMouse.x, 0.08);
+  state.mouse.y = lerp(state.mouse.y, state.targetMouse.y, 0.08);
+  const ss = SECTION_STATES[state.section] || SECTION_STATES.about;
+  currentCamPos.lerp(new THREE.Vector3().fromArray(ss.camPos), 0.025);
+  currentCamLook.lerp(new THREE.Vector3().fromArray(ss.camLook), 0.025);
+  camera.position.copy(currentCamPos).add(new THREE.Vector3(state.mouse.x * 4, -state.mouse.y * 2, 0));
+  camera.lookAt(currentCamLook);
+  applyBuildState(sceneGroups.buildings, ss.buildState);
+  sceneGroups.particles.update(1.0, state.mouse.x, state.mouse.y);
+  document.getElementById('stateLabel').textContent = ss.label;
+  const siDots = document.querySelectorAll('.si-dot');
+  siDots.forEach(dot => dot.classList.toggle('active', dot.dataset.target === `sec-${state.section}`));
+  renderer.render(scene, camera);
 }
-
-function onScroll() {
-  const total = document.body.scrollHeight - window.innerHeight;
-  state.scroll = Math.max(0, Math.min(1, window.scrollY / total));
-  state.section = getCurrentSection();
-}
-window.addEventListener('scroll', onScroll, { passive: true });
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-document.addEventListener('visibilitychange', () => {
-  state.visible = !document.hidden;
-});
+animate();
 
 const revObs = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
-  });
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
-// ── NAV ACTIVE + DOTS ────────────────────────────────────
-const siDots = document.querySelectorAll('.si-dot');
-
-function updateNavAndDots() {
-  const sec = state.section;
-  siDots.forEach((dot) => {
-    dot.classList.toggle('active', dot.dataset.target === `sec-${sec}`);
-  });
-}
-
-siDots.forEach(dot => {
-  dot.addEventListener('click', () => {
-    document.getElementById(dot.dataset.target)?.scrollIntoView({ behavior:'smooth' });
-  });
+document.querySelectorAll('.si-dot').forEach(dot => {
+  dot.addEventListener('click', () => document.getElementById(dot.dataset.target).scrollIntoView({ behavior:'smooth' }));
 });
-
-const currentCamPos  = new THREE.Vector3().copy(SECTION_STATES.about.camPos);
-const currentCamLook = new THREE.Vector3().copy(SECTION_STATES.about.camLook);
-const camMouseOffset = new THREE.Vector3();
-
-const perfEl = document.getElementById('perf');
-const stateEl = document.getElementById('stateLabel');
-let fpsAccum = 0, fpsFrames = 0;
-
-// ── MAIN RENDER LOOP ─────────────────────────────────────
-function animate(now = 0) {
-  requestAnimationFrame(animate);
-  if (!state.visible) return;
-
-  const dt = Math.min((now - state.lastTime) / 1000, 0.05);
-  state.lastTime = now;
-  state.time += dt;
-
-  fpsFrames++;
-  fpsAccum += dt;
-  if (fpsAccum >= 1) {
-    state.fps = Math.round(fpsFrames / fpsAccum);
-    perfEl.textContent = `FPS: ${state.fps}`;
-    fpsFrames = 0; fpsAccum = 0;
-  }
-
-  state.mouse.x = lerp(state.mouse.x, state.targetMouse.x, 0.08);
-  state.mouse.y = lerp(state.mouse.y, state.targetMouse.y, 0.08);
-
-  const sec = state.section;
-  const ss = SECTION_STATES[sec] || SECTION_STATES.about;
-
-  const targetPos  = new THREE.Vector3().fromArray(ss.camPos);
-  const targetLook = new THREE.Vector3().fromArray(ss.camLook);
-
-  currentCamPos.lerp(targetPos, 0.025);
-  currentCamLook.lerp(targetLook, 0.025);
-
-  camMouseOffset.set(
-    state.mouse.x * 4.0,
-    -state.mouse.y * 2.5,
-    0
-  );
-
-  camera.position.copy(currentCamPos).add(camMouseOffset);
-  camera.lookAt(currentCamLook);
-  
-  // ── RAYCASTING (HOVER EFFECT) ──
-  raycaster.setFromCamera(state.mouse, camera);
-  
-  sceneGroups.buildings.children.forEach(b => b.userData.isHovered = false);
-  sceneGroups.silos.children.forEach(s => s.userData.isHovered = false);
-  
-  const intersects = raycaster.intersectObjects([...sceneGroups.buildings.children, ...sceneGroups.silos.children], true);
-  if (intersects.length > 0) {
-      let obj = intersects[0].object;
-      while(obj.parent && obj.parent !== sceneGroups.buildings && obj.parent !== sceneGroups.silos) {
-          obj = obj.parent;
-      }
-      if (obj.userData !== undefined) obj.userData.isHovered = true;
-  }
-
-  const buildProg = ss.buildState;
-
-  applyBuildState(sceneGroups.buildings, buildProg);
-  applyBuildState(sceneGroups.silos, buildProg);
-  applyFrameState(buildProg);
-
-  sunLight.intensity = lerp(sunLight.intensity, ss.lightIntensity, 0.02);
-
-  sceneGroups.underground.position.y = lerp(
-    sceneGroups.underground.position.y,
-    buildProg < 0.15 ? 0 : -4,
-    0.04
-  );
-  sceneGroups.underground.children.forEach(p => {
-    if (p.material) p.material.opacity = lerp(p.material.opacity, buildProg < 0.15 ? 0.85 : 0, 0.03);
-  });
-
-  const particleIntensity = Math.max(0, 1 - Math.abs(buildProg - 0.5) * 3);
-  sceneGroups.particles.update(particleIntensity, state.mouse.x, state.mouse.y);
-
-  sceneGroups.terrain.children.forEach(child => {
-    if (child instanceof THREE.Line) {
-      const mat = child.material;
-      if (mat && mat !== MAT.gridLine) {
-        mat.opacity = 0.08 + Math.sin(state.time * 0.5) * 0.06;
-      }
-    }
-  });
-
-  if (!state.isDragging) {
-      state.dragOffset.x = lerp(state.dragOffset.x, 0, 0.02);
-  }
-
-  let targetRotationY = (state.mouse.x * 0.05) + state.dragOffset.x;
-  
-  sceneGroups.buildings.rotation.y = lerp(
-    sceneGroups.buildings.rotation.y,
-    targetRotationY,
-    0.08
-  );
-  sceneGroups.frames.rotation.y = sceneGroups.buildings.rotation.y;
-  sceneGroups.silos.rotation.y  = sceneGroups.buildings.rotation.y;
-
-  stateEl.textContent = ss.label;
-  updateNavAndDots();
-
-  renderer.render(scene, camera);
-}
-
-animate();
 </script>
 </body>
 </html>
