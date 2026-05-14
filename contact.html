@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact & Enquiry | Sai Meghna Technical Consultants LLP</title>
+<title>Contact & Enquiry | Sai Meghana Technical Consultants LLP</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -325,19 +325,131 @@ textarea.form-input {
 
 /* ── FOOTER ──────────────────────────────────── */
 footer {
-  position:relative; z-index:50;
-  background:var(--accent-navy); border-top:1px solid var(--border);
-  padding:2.5rem 4rem; color:var(--bg-main);
-  display:flex; justify-content:space-between; align-items:center;
-  flex-wrap:wrap; gap:1.5rem;
+  position: relative;
+  z-index: 50;
+  background: var(--bg-main); 
+  border-top: 1px solid var(--border);
+  padding: 4rem 4rem 1.5rem;
   pointer-events: auto;
 }
-.ft-brand { font-family:'DM Sans',sans-serif; font-size:1.1rem; font-weight:600; color:var(--bg-main); letter-spacing:0.05em; display:flex; align-items:center; gap:12px; flex-wrap: wrap;}
-.ft-meta { font-size:.75rem; color:var(--text-light); margin-top:5px; }
-.ft-links { display:flex; gap:2rem; flex-wrap: wrap;}
-.ft-links a { font-size:.75rem; color:var(--text-light); text-decoration:none; text-transform:uppercase; letter-spacing:.08em; transition:color .3s; font-weight:600;}
-.ft-links a:hover { color:var(--accent-cyan); }
-.ft-copy { font-size:.73rem; color:var(--text-light); }
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.ft-brand-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 250px;
+}
+.ft-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-top: 12px;
+  text-align: center;
+}
+.ft-brand-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+  text-align: center;
+}
+.ft-address-col {
+  flex: 2;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.ft-address-item {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+.ft-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--text-muted);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.ft-address-text {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+.ft-address-text strong {
+  color: var(--accent-navy);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.ft-contact-col {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.ft-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.ft-contact-item:hover {
+  color: var(--accent-navy);
+}
+.ft-bottom {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.ft-copy {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+.ft-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.ft-links a {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+  font-weight: 600;
+}
+.ft-links a:hover {
+  color: var(--accent-cyan);
+}
 
 /* ── REVEAL ANIMATION ────────────────────────── */
 .reveal { opacity:0; transform:translateY(30px); transition:opacity .75s ease,transform .75s ease; }
@@ -382,8 +494,11 @@ footer {
   .nav-brand { justify-content: center; }
   .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; }
   .page-section { padding: 8rem 2rem 4rem; } 
-  footer { padding: 2rem; }
   .scene-indicator { display: none; }
+  .footer-container { flex-direction: column; align-items: flex-start; }
+  .ft-brand-col { align-items: flex-start; }
+  .ft-brand-name, .ft-brand-sub { text-align: left; }
+  footer { padding: 2rem 1.5rem; }
 }
 
 @media(max-width: 600px){
@@ -404,17 +519,6 @@ footer {
   
   .contact-info-box, .enquiry-form { padding: 1.5rem; }
   .info-detail { font-size: 1.3rem; }
-  
-  footer { 
-    padding: 2rem 1.5rem; 
-    flex-direction: column; 
-    text-align: center; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 2rem;
-  }
-  .ft-brand { justify-content: center; }
-  .ft-links { justify-content: center; }
   
   .state-badge { padding: 0.4rem 1rem; font-size: 0.6rem; bottom: 1rem; }
 }
@@ -458,7 +562,7 @@ footer {
       </svg>
     </div>
     <div class="brand-text">
-      Sai Meghna
+      Sai Meghana
       <span>Technical Consultants</span>
     </div>
   </a>
@@ -490,7 +594,7 @@ footer {
   <section id="sec-why-us" class="page-section sec-bg-mid" data-scene="why-us" style="flex-direction:column;align-items:flex-start;">
     <div class="reveal content-block">
       <div class="sec-label">The SMTC LLP Advantage</div>
-      <h2 class="sec-title">Why Partner With<br><em>Sai Meghna?</em></h2>
+      <h2 class="sec-title">Why Partner With<br><em>Sai Meghana?</em></h2>
       <p class="sec-desc">We do not just supervise; we engineer success. Our integrated approach ensures that complex regulatory demands and heavy-duty industrial requirements are met flawlessly.</p>
       
       <div class="why-us-grid">
@@ -576,31 +680,67 @@ footer {
 </div><!-- /scroll-container -->
 
 <footer>
-  <div>
-    <div class="ft-brand">
-      <div style="width: 32px; height: 32px;">
-        <svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="footer-container">
+    
+    <!-- COLUMN 1: Logo & Brand -->
+    <div class="ft-brand-col">
+      <div style="width: 80px; height: 80px;">
+        <svg width="100%" height="100%" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(100, 5)">
-            <polygon points="0,0 22,25 0,16" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,0 -22,25 0,16" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,11 44,48 0,33" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,11 -44,48 0,33" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,22 66,71 0,50" fill="#ffffff" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
-            <polygon points="0,22 -66,71 0,50" fill="#00adef" stroke="#002147" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,0 22,25 0,16" fill="#001a4d" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,0 -22,25 0,16" fill="#00a8e8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 44,48 0,33" fill="#002b66" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,11 -44,48 0,33" fill="#00b4d8" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 66,71 0,50" fill="#003c80" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,22 -66,71 0,50" fill="#00c0f0" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,33 88,94 0,67" fill="#004d99" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,33 -88,94 0,67" fill="#00ccff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,44 110,117 0,84" fill="#0066b3" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="0,44 -110,117 0,84" fill="#00d4ff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
           </g>
         </svg>
       </div>
-      SAI MEGHNA TECHNICAL CONSULTANTS
+      <div class="ft-brand-name">SAI MEGHANA</div>
+      <div class="ft-brand-sub">Technical Consultants</div>
     </div>
-    <div class="ft-meta">Hyderabad, Telangana · GST: 36**********1ZZ · Reg. Oct 2024</div>
+
+    <!-- COLUMN 2: Addresses -->
+    <div class="ft-address-col">
+      <div class="ft-address-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <div class="ft-address-text">
+          <strong>Regd. Office</strong> - #304, Anushka Trendz, Road No. 14, Banjara Hills, Hyderabad, Telangana India - 500034
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMN 3: Contact Info -->
+    <div class="ft-contact-col">
+      <a href="mailto:smtcllp2024@gmail.com" class="ft-contact-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        <span>smtcllp2024@gmail.com</span>
+      </a>
+      <a href="#" class="ft-contact-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span>www.saimeghana.com</span>
+      </a>
+      <a href="tel:+919490463775" class="ft-contact-item">
+        <svg class="ft-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <span>+91 94904 63775</span>
+      </a>
+    </div>
+
   </div>
-  <div class="ft-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="SERVICES.html">Services</a>
-    <a href="contact.html">Contact</a>
+
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2024 Sai Meghana Technical Consultants LLP. All rights reserved.</div>
+    <div class="ft-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="SERVICES.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </div>
-  <div class="ft-copy">© 2024 Sai Meghna Technical Consultants LLP. All rights reserved.</div>
 </footer>
 
 <!-- THREE.JS CDN -->
@@ -609,7 +749,7 @@ footer {
 <script>
 'use strict';
 /* ═══════════════════════════════════════════════════════════
-   SAI MEGHNA — INTERACTIVE 3D BACKGROUND ENGINE
+   SAI MEGHANA — INTERACTIVE 3D BACKGROUND ENGINE
    Architecture: Three.js r128
    Theme: Deep Blue Blueprint Integration 
    Interaction: Desktop Hover Raycasting, Drag to Orbit, Particle Repulsion
