@@ -133,7 +133,8 @@ nav {
 .hero-badge {
   display:inline-flex; align-items:center; gap:8px;
   padding:.38rem 1rem; border:1px solid var(--border-strong); border-radius:3px;
-  margin-bottom:2rem; font-size:.72rem; font-weight:600;
+  margin-bottom:2rem; font-size:.65rem; /* Reduced font size */
+  font-weight:600;
   letter-spacing:.14em; text-transform:uppercase; color:var(--accent-navy);
   background:var(--bg-glass);
   animation:fadeUp .8s .4s ease both;
@@ -145,7 +146,7 @@ nav {
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 .hero-title {
   font-family:'Playfair Display',serif;
-  font-size:clamp(2.5rem,5.5vw,4.8rem);
+  font-size:clamp(2.2rem, 4.5vw, 4rem); /* Reduced font size */
   font-weight:700; line-height:1.07;
   margin-bottom:1.6rem; color:var(--text-main);
   animation:fadeUp .8s .6s ease both;
@@ -153,7 +154,8 @@ nav {
 }
 .hero-title em { font-style:italic; color:var(--accent-cyan); }
 .hero-sub {
-  font-size:1.05rem; color:var(--text-muted); line-height:1.8;
+  font-size:0.95rem; /* Reduced font size */
+  color:var(--text-muted); line-height:1.8;
   max-width:550px; margin-bottom:3rem;
   animation:fadeUp .8s .8s ease both;
 }
@@ -445,23 +447,18 @@ footer {
 </head>
 <body>
 
-<!-- THREE.JS CANVAS -->
 <canvas id="three-canvas"></canvas>
 
-<!-- PERF COUNTER -->
 <div id="perf">FPS: --</div>
 
-<!-- SCENE STATE BADGE -->
 <div class="state-badge"><span class="state-badge-text" id="stateLabel">Loading Environment...</span></div>
 
-<!-- SCENE PAGE INDICATORS -->
 <div class="scene-indicator">
   <div class="si-dot active" data-target="sec-about"></div>
   <div class="si-dot" data-target="sec-expertise"></div>
   <div class="si-dot" data-target="sec-trust"></div>
 </div>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-brand">
     <div class="brand-icon">
@@ -493,10 +490,8 @@ footer {
   </div>
 </nav>
 
-<!-- SCROLL CONTAINER -->
 <div id="scroll-container">
 
-  <!-- ── ABOUT HERO ─────────────────────────────────── -->
   <section id="sec-about" class="page-section sec-bg-dark" data-scene="about">
     <div class="hero-content">
       <div class="hero-badge">Company Overview</div>
@@ -509,7 +504,6 @@ footer {
     </div>
   </section>
 
-  <!-- ── EXPERTISE & PILLARS ───────────────────────── -->
   <section id="sec-expertise" class="page-section sec-bg-mid" data-scene="expertise" style="flex-direction:column;align-items:flex-start;">
     <div class="reveal content-block">
       <div class="sec-label">End-to-End Solutions</div>
@@ -517,19 +511,16 @@ footer {
       <p class="sec-desc">We established our firm with a vision to deliver end-to-end solutions that combine technical expertise, compliance clarity, and innovative design to support industrial and commercial growth.</p>
       
       <div class="pillars-grid">
-        <!-- Pillar 1 -->
         <div class="pillar-card">
           <div class="pillar-icon">🏗️</div>
           <h3 class="pillar-title">Civil Supervision</h3>
           <p class="pillar-text">Expert supervision of large-scale civil works for factories and industrial complexes. We ensure every project is delivered with precise technical execution and accountability.</p>
         </div>
-        <!-- Pillar 2 -->
         <div class="pillar-card">
           <div class="pillar-icon">📊</div>
           <h3 class="pillar-title">Project Consultancy</h3>
           <p class="pillar-text">Guiding clients through critical phases including feasibility studies, Detailed Project Report (DPR) preparation, and navigating complex regulatory approvals.</p>
         </div>
-        <!-- Pillar 3 -->
         <div class="pillar-card">
           <div class="pillar-icon">📐</div>
           <h3 class="pillar-title">Architectural Design</h3>
@@ -539,7 +530,6 @@ footer {
     </div>
   </section>
 
-  <!-- ── TRUST & COMPLIANCE ────────────────────────── -->
   <section id="sec-trust" class="page-section sec-bg-dark" data-scene="trust" style="flex-direction:column;align-items:flex-start;">
     <div class="reveal content-block">
       <div class="sec-label">Foundation & Integrity</div>
@@ -548,12 +538,9 @@ footer {
     </div>
   </section>
 
-</div><!-- /scroll-container -->
-
-<footer>
+</div><footer>
   <div class="footer-container">
     
-    <!-- COLUMN 1: Logo & Brand -->
     <div class="ft-brand-col">
       <div style="width: 80px; height: 80px;">
         <svg width="100%" height="100%" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -575,7 +562,6 @@ footer {
       <div class="ft-brand-sub">Technical Consultants</div>
     </div>
 
-    <!-- COLUMN 2: Addresses -->
     <div class="ft-address-col">
       <div class="ft-address-item">
         <svg class="ft-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
@@ -585,7 +571,6 @@ footer {
       </div>
     </div>
 
-    <!-- COLUMN 3: Contact Info -->
     <div class="ft-contact-col">
       <a href="mailto:smtcllp2024@gmail.com" class="ft-contact-item">
         <svg class="ft-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -614,7 +599,6 @@ footer {
   </div>
 </footer>
 
-<!-- THREE.JS CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
