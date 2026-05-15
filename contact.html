@@ -253,7 +253,7 @@ nav {
 }
 .info-detail {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
+  font-size: 1.4rem; /* Adjusted font size for the email address */
   margin-bottom: 2rem;
   word-break: break-all;
 }
@@ -518,7 +518,7 @@ footer {
   .advantage-card { padding: 1.5rem; }
   
   .contact-info-box, .enquiry-form { padding: 1.5rem; }
-  .info-detail { font-size: 1.3rem; }
+  .info-detail { font-size: 1.1rem; } /* Adjusted mobile font size */
   
   .state-badge { padding: 0.4rem 1rem; font-size: 0.6rem; bottom: 1rem; }
 }
@@ -526,23 +526,18 @@ footer {
 </head>
 <body>
 
-<!-- THREE.JS CANVAS -->
 <canvas id="three-canvas"></canvas>
 
-<!-- PERF COUNTER -->
 <div id="perf">FPS: --</div>
 
-<!-- SCENE STATE BADGE -->
 <div class="state-badge"><span class="state-badge-text" id="stateLabel">Initializing Secure Connection...</span></div>
 
-<!-- SCENE PAGE INDICATORS -->
 <div class="scene-indicator">
   <div class="si-dot active" data-target="sec-contact-hero"></div>
   <div class="si-dot" data-target="sec-why-us"></div>
   <div class="si-dot" data-target="sec-enquiry"></div>
 </div>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-brand">
     <div class="brand-icon">
@@ -574,10 +569,8 @@ footer {
   </div>
 </nav>
 
-<!-- SCROLL CONTAINER -->
 <div id="scroll-container">
 
-  <!-- ── CONTACT HERO ─────────────────────────────────── -->
   <section id="sec-contact-hero" class="page-section sec-bg-dark" data-scene="contact-hero">
     <div class="hero-content">
       <div class="hero-badge">Engage Our Team</div>
@@ -590,7 +583,6 @@ footer {
     </div>
   </section>
 
-  <!-- ── WHY HIRE US ───────────────────────────────── -->
   <section id="sec-why-us" class="page-section sec-bg-mid" data-scene="why-us" style="flex-direction:column;align-items:flex-start;">
     <div class="reveal content-block">
       <div class="sec-label">The SMTC LLP Advantage</div>
@@ -619,14 +611,12 @@ footer {
     </div>
   </section>
 
-  <!-- ── ENQUIRY & CONTACT FORM ──────────────────────── -->
   <section id="sec-enquiry" class="page-section sec-bg-dark" data-scene="enquiry" style="flex-direction:column;align-items:flex-start;">
     <div class="reveal content-block" style="width: 100%;">
       <div class="sec-label">Connect With Us</div>
       <h2 class="sec-title">Submit Your<br><em>Enquiry.</em></h2>
       
       <div class="contact-wrapper">
-        <!-- Direct Info Box -->
         <div class="contact-info-box">
           <div class="info-label">Direct Communication</div>
           <div class="info-detail">
@@ -641,7 +631,6 @@ footer {
           </div>
         </div>
 
-        <!-- HTML Form Integration -->
         <div class="enquiry-form">
           <form action="mailto:smtcllp2024@gmail.com" method="post" enctype="text/plain">
             <div class="form-group">
@@ -677,12 +666,9 @@ footer {
     </div>
   </section>
 
-</div><!-- /scroll-container -->
-
-<footer>
+</div><footer>
   <div class="footer-container">
     
-    <!-- COLUMN 1: Logo & Brand -->
     <div class="ft-brand-col">
       <div style="width: 80px; height: 80px;">
         <svg width="100%" height="100%" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -704,7 +690,6 @@ footer {
       <div class="ft-brand-sub">Technical Consultants</div>
     </div>
 
-    <!-- COLUMN 2: Addresses -->
     <div class="ft-address-col">
       <div class="ft-address-item">
         <svg class="ft-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
@@ -714,7 +699,6 @@ footer {
       </div>
     </div>
 
-    <!-- COLUMN 3: Contact Info -->
     <div class="ft-contact-col">
       <a href="mailto:smtcllp2024@gmail.com" class="ft-contact-item">
         <svg class="ft-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -743,7 +727,6 @@ footer {
   </div>
 </footer>
 
-<!-- THREE.JS CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
